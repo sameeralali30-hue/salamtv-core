@@ -2882,7 +2882,6 @@
 1	technical	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	.apk
 1	technical	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	Accept
 2	technical	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	OwnTV
-1	technical	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	SalamTV-App/salamtv
 1	log	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	UpdateManager
 2	technical	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	User-Agent
 1	mime	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	application/vnd.github+json

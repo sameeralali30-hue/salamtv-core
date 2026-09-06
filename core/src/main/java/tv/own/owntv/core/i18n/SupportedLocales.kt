@@ -41,8 +41,14 @@ object SupportedLocales {
     /** Canonical Hosted Weblate project overview used by the app and generated documentation. */
     const val CONTRIBUTION_PROJECT_URL: String = "https://hosted.weblate.org/projects/owntv/"
 
-    /** Canonical issue form for requesting a locale before its base files exist. */
-    const val LANGUAGE_REQUEST_URL: String = "https://github.com/ahXN00/OwnTV/issues/new?template=feature_request.yml&title=%5BLanguage%5D%20Add%20"
+    /**
+     * Issue form for requesting a locale before its base files exist.
+     *
+     * Points at this fork, not upstream: a SalamTV subscriber tapping "request a language" would
+     * otherwise file a ticket on a project that does not ship this app, against a maintainer who
+     * cannot act on it.
+     */
+    const val LANGUAGE_REQUEST_URL: String = "https://github.com/sameeralali30-hue/salamtv/issues/new?title=%5BLanguage%5D%20Add%20"
 
     /** Tag meaning "follow the current device locale list" (see ``LocaleStore``). */
     const val SYSTEM_DEFAULT_TAG: String = ""
