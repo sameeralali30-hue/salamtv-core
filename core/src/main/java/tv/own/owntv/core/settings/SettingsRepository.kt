@@ -1803,9 +1803,12 @@ class SettingsRepository(private val context: Context, private val localeStore: 
         // Also report Balanced before the startup migration coroutine completes, so an auto-resumed
         // channel cannot briefly reuse an unsafe low/custom latency on the first 4.1.6 launch.
         if (prefs[Keys.LIVE_LATENCY_RESET_416] == true) {
-            prefs[Keys.LIVE_LATENCY_MODE] ?: LiveLatency.DEFAULT.name
+            prefs[Keys.LIVE_LATENCY_MODE] ?: SalamTvDefaults.LATENCY.name
         } else {
-            LiveLatency.BALANCED.name
+            // Before the one-time migration below has run. It reports the same value the migration
+            // is about to write, so a channel auto-resumed at startup does not begin on one buffer
+            // depth and silently switch to another a moment later.
+            SalamTvDefaults.LATENCY.name
         }
     }
 
@@ -1820,7 +1823,10 @@ class SettingsRepository(private val context: Context, private val localeStore: 
     suspend fun migrateLiveLatency416() {
         context.dataStore.edit { prefs ->
             if (prefs[Keys.LIVE_LATENCY_RESET_416] == true) return@edit
-            prefs[Keys.LIVE_LATENCY_MODE] = LiveLatency.BALANCED.name
+            // Writes SalamTV's default, not upstream's. This runs once on every install, fresh ones
+            // included, so leaving it at BALANCED would have quietly overwritten the default set in
+            // SalamTvDefaults before any subscriber ever saw it.
+            prefs[Keys.LIVE_LATENCY_MODE] = SalamTvDefaults.LATENCY.name
             prefs[Keys.LIVE_LATENCY_RESET_416] = true
         }
     }
@@ -1840,7 +1846,7 @@ class SettingsRepository(private val context: Context, private val localeStore: 
      * start thresholds. A per-playlist override lives on `SourceEntity.livePrerollSecs`.
      */
     val livePrerollSecs: Flow<Int> = prefsFlow { prefs ->
-        (prefs[Keys.LIVE_PREROLL_SECS] ?: LiveBuffer.PREROLL_OFF).coerceIn(0, 30)
+        (prefs[Keys.LIVE_PREROLL_SECS] ?: SalamTvDefaults.PREROLL_SECS).coerceIn(0, 30)
     }
 
     suspend fun setLivePrerollSecs(secs: Int) {

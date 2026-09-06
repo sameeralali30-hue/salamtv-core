@@ -59,6 +59,8 @@ class ExoSubtitleEngine(
         fun onFirstFrame()
         fun onCues(cues: List<Cue>)
         fun onAudioTracks(tracks: List<TrackOption>)
+        /** Selectable video renditions — the HLS variant ladder, or the single track of a plain file. */
+        fun onVideoTracks(tracks: List<TrackOption>) {}
         /** Text/image subtitle tracks from the active file — [OwnTVPlayer] shows these in the HUD while
          *  this engine owns playback as a VOD engine (mpv never probed the file, so its list is empty). */
         fun onTextTracks(tracks: List<TrackOption>)
@@ -173,6 +175,13 @@ class ExoSubtitleEngine(
 
     private data class AudioSel(val id: Int, val group: TrackGroup, val trackIndex: Int)
 
+    /** A selectable video rendition. [height] is what the menu shows and what sorting uses. */
+    private data class VideoSel(val id: Int, val group: TrackGroup, val trackIndex: Int, val height: Int)
+    private var videoSelections: List<VideoSel> = emptyList()
+    /** -1 = automatic (adaptive). Kept across track-list rebuilds so a mid-stream manifest refresh
+     *  does not silently drop the subscriber back to automatic. */
+    private var pinnedVideoId: Int = -1
+
     val isActive: Boolean get() = player != null
 
     private val throughputTracker = ThroughputTracker()
@@ -248,6 +257,7 @@ class ExoSubtitleEngine(
         override fun onTracksChanged(tracks: Tracks) {
             updateVideoTrackPresence(tracks)
             rebuildAudioTracks(tracks)
+            rebuildVideoTracks(tracks)
             rebuildTextTracks(tracks)
             applyPendingSubtitle(tracks)
         }
@@ -759,6 +769,85 @@ class ExoSubtitleEngine(
 
     /** Enumerate the file's text/image subtitle tracks for the HUD menu. [TrackOption.mpvId] and
      *  [TrackOption.typeIndex] are both the ordinal among text tracks — [selectTextTrack] selects by it. */
+    /**
+     * Enumerate the video renditions for the quality menu.
+     *
+     * For HLS this is the variant ladder from the master playlist — exactly the list the operator's
+     * quality cap has already trimmed server-side, so the menu can never offer more than the plan
+     * allows.
+     *
+     * A single-rendition stream yields one entry and no menu: offering a "quality" choice with one
+     * option tells the subscriber their connection is the problem when it is the source.
+     */
+    private fun rebuildVideoTracks(tracks: Tracks) {
+        val out = ArrayList<TrackOption>()
+        val sels = ArrayList<VideoSel>()
+        var id = 0
+        for (group in tracks.groups) {
+            if (group.type != C.TRACK_TYPE_VIDEO) continue
+            for (i in 0 until group.length) {
+                val f = group.getTrackFormat(i)
+                val h = f.height
+                if (h <= 0) continue        // no declared size: nothing meaningful to label it with
+                out.add(
+                    TrackOption(
+                        label = h.toString(),
+                        mpvId = id,
+                        selected = pinnedVideoId == id,
+                        typeIndex = id,
+                        labelKind = TrackLabelKind.AUDIO,
+                    ),
+                )
+                sels.add(VideoSel(id, group.mediaTrackGroup, i, h))
+                id++
+            }
+        }
+        // Highest first — the order a viewer reads a quality list in.
+        val order = sels.sortedByDescending { it.height }
+        android.util.Log.i(TAG, "video renditions: ${order.size} ${order.map { it.height }}")
+        videoSelections = order
+        callbacks.onVideoTracks(
+            order.map { sel -> out.first { it.mpvId == sel.id }.copy(selected = pinnedVideoId == sel.id) },
+        )
+    }
+
+    /**
+     * Pin one rendition, or pass -1 to return to adaptive.
+     *
+     * Adaptive is restored by clearing the override rather than pinning the top rung: pinning the
+     * top defeats the whole point of ABR on a connection that cannot sustain it, which is the case
+     * that made the subscriber open this menu.
+     */
+    fun selectVideo(id: Int) {
+        val p = player ?: return
+        pinnedVideoId = id
+        val sel = videoSelections.firstOrNull { it.id == id }
+        val params = p.trackSelectionParameters.buildUpon()
+            .clearOverridesOfType(C.TRACK_TYPE_VIDEO)
+        if (sel != null) {
+            params.addOverride(
+                androidx.media3.common.TrackSelectionOverride(sel.group, listOf(sel.trackIndex)),
+            )
+            android.util.Log.i(TAG, "video track -> ${sel.height}p (pinned)")
+        } else {
+            android.util.Log.i(TAG, "video track -> automatic")
+        }
+        p.trackSelectionParameters = params.build()
+        videoSelections.let { list ->
+            callbacks.onVideoTracks(
+                list.map {
+                    TrackOption(
+                        label = it.height.toString(),
+                        mpvId = it.id,
+                        selected = it.id == id,
+                        typeIndex = it.id,
+                        labelKind = TrackLabelKind.AUDIO,
+                    )
+                },
+            )
+        }
+    }
+
     private fun rebuildTextTracks(tracks: Tracks) {
         val out = ArrayList<TrackOption>()
         var id = 0
@@ -963,6 +1052,8 @@ class ExoSubtitleEngine(
         }
         player = null
         audioSelections = emptyList()
+        videoSelections = emptyList()
+        pinnedVideoId = -1
         fallbackMode = false
         currentUrl = null
         externalSubs.clear()

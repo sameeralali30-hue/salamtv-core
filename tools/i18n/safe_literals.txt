@@ -2879,7 +2879,7 @@
 1	log	core/src/main/java/tv/own/owntv/core/tv/TvHomeRepository.kt	syncMovie profile=$profileId movieId=$movieId groupId=$groupId existing=${existing?.providerProgramId ?: -1}
 1	log	core/src/main/java/tv/own/owntv/core/tv/TvHomeRepository.kt	syncMovie skip hidden profile=$profileId movieId=$movieId sourceId=${movie.sourceId}
 1	log	core/src/main/java/tv/own/owntv/core/tv/TvHomeRepository.kt	syncMovie skip user-hidden profile=$profileId movieId=$movieId groupId=$groupId
-1	technical	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	.apk
+1	protocol	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	.apk
 1	technical	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	Accept
 2	technical	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	OwnTV
 1	log	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	UpdateManager
@@ -2905,7 +2905,6 @@
 1	file-path	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	updates
 1	technical	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	v
 1	log	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	wrong package ${info.packageName}
-2	technical	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	x86_64
 1	technical	core/src/main/java/tv/own/owntv/core/util/CrashRecorder.kt	Crashed $stamp on thread "${thread.name}"
 1	technical	core/src/main/java/tv/own/owntv/core/util/CrashRecorder.kt	OwnTV ${CoreBuildInfo.versionName} (${CoreBuildInfo.versionCode})
 1	file-path	core/src/main/java/tv/own/owntv/core/util/CrashRecorder.kt	diagnostics
@@ -3139,6 +3138,9 @@
 1	technical	player-core/src/main/java/tv/own/owntv/player/ExoSubtitleEngine.kt	subshift_
 1	log	player-core/src/main/java/tv/own/owntv/player/ExoSubtitleEngine.kt	video decoder: $decoderName (init ${initializationDurationMs}ms,
 1	log	player-core/src/main/java/tv/own/owntv/player/ExoSubtitleEngine.kt	video input format: ${format.sampleMimeType} ${format.width}x${format.height} fps=${format.frameRate}
+1	log	player-core/src/main/java/tv/own/owntv/player/ExoSubtitleEngine.kt	video renditions: ${order.size} ${order.map { it.height }}
+1	log	player-core/src/main/java/tv/own/owntv/player/ExoSubtitleEngine.kt	video track -> ${sel.height}p (pinned)
+1	log	player-core/src/main/java/tv/own/owntv/player/ExoSubtitleEngine.kt	video track -> automatic
 1	technical	player-core/src/main/java/tv/own/owntv/player/ExoSubtitleEngine.kt	vp9
 1	technical	player-core/src/main/java/tv/own/owntv/player/ExoSubtitleEngine.kt	vtt
 1	technical	player-core/src/main/java/tv/own/owntv/player/ExoSubtitleEngine.kt	webvtt
@@ -3376,7 +3378,7 @@
 2	protocol	player-core/src/main/java/tv/own/owntv/player/LiveStreamQuirks.kt	.m3u8
 1	protocol	player-core/src/main/java/tv/own/owntv/player/LiveStreamQuirks.kt	.ts
 1	protocol	player-core/src/main/java/tv/own/owntv/player/LiveStreamQuirks.kt	://
-12	empty	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	\0
+13	empty	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	\0
 1	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	$STREAM_RECONNECT_OPTIONS,reconnect_at_eof=1
 1	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	$reason — archive rescue: reopening mid-GOP catch-up in software decode
 1	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	$reason — rescue rung 1: hwdec=mediacodec-copy (GL compositing)
@@ -3577,6 +3579,7 @@
 5	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	height
 1	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	hevc
 1	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	hlg
+2	protocol	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	hls-bitrate
 1	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	http-header-fields
 1	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	http-proxy
 1	regex	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	http|error|fail|refus|timed out|unrecogn|cannot|no such|invalid|denied|forbidden|not found|
@@ -3600,11 +3603,13 @@
 1	log	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	load#=$mpvLoadCount freshSurface=$usedFreshSurface
 1	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	loadfile
 1	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	manual engine toggle
+1	protocol	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	max
 1	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	measured fps: est-vf-fps=$second -> ${snapped}fps (no container-fps)
 3	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	mediacodec
 1	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	mediacodec-copy
 4	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	mediacodec_embed
 1	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	mediacodec|omx\\.|c2\\.|hwdec|hardware decod|could not open codec|decoder|0x8000|0xfffffff
+1	protocol	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	min
 1	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	mistimed-frame-count
 1	log	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	mistimed=${getPropertyString("mistimed-frame-count")}
 1	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	mlp
@@ -3710,6 +3715,7 @@
 2	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	user-agent
 1	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	vc-1
 1	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	vc1
+1	protocol	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	vf
 2	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	vid
 1	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	video-aspect-override
 4	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	video-bitrate

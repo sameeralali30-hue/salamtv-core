@@ -33,6 +33,10 @@ interface PlaybackEngine {
     val volume: StateFlow<Int>
     val zoomMode: StateFlow<ZoomMode>
     val audioCount: StateFlow<Int>
+    /** Number of selectable video renditions; 1 or 0 means the HUD shows no quality control. */
+    val qualityCount: StateFlow<Int> get() = ZERO_FLOW
+    fun videoTracks(): List<TrackOption> = emptyList()
+    fun selectVideo(id: Int) {}
     val subCount: StateFlow<Int>
     val currentMeta: StateFlow<MediaMeta>
     val isLiveContent: Boolean
@@ -134,7 +138,8 @@ interface PlaybackEngine {
         private val NO_BACKOFF: StateFlow<ProviderBackOff?> = MutableStateFlow(null)
         private val NO_CHIPS: StateFlow<List<String>> = MutableStateFlow(emptyList())
         private val NULL_STRING: StateFlow<String?> = MutableStateFlow(null)
-        private val FALSE_FLOW: StateFlow<Boolean> = MutableStateFlow(false)
+        private val ZERO_FLOW: StateFlow<Int> = MutableStateFlow(0)
+private val FALSE_FLOW: StateFlow<Boolean> = MutableStateFlow(false)
         private val DEFAULT_SEEK_STEP: StateFlow<Long> =
             MutableStateFlow(tv.own.owntv.core.settings.SeekSteps.DEFAULT_SEEK_STEP_SEC * 1000L)
     }
@@ -152,6 +157,9 @@ class MpvPlaybackEngine(private val p: OwnTVPlayer) : PlaybackEngine {
     override val volume get() = p.volume
     override val zoomMode get() = p.zoomMode
     override val audioCount get() = p.audioCount
+    override val qualityCount get() = p.qualityCount
+    override fun videoTracks() = p.videoTracks()
+    override fun selectVideo(id: Int) = p.selectVideo(id)
     override val subCount get() = p.subCount
     override val currentMeta get() = p.currentMeta
     override val isLiveContent get() = p.isLiveContent

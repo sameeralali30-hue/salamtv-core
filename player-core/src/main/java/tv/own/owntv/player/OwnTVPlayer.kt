@@ -11,6 +11,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -1301,7 +1303,20 @@ class OwnTVPlayer(
     private val _subText = MutableStateFlow<String?>(null)
     val subText: StateFlow<String?> = _subText.asStateFlow()
     private val _audioCount = MutableStateFlow(0)
+    /**
+     * Selectable video renditions, highest first. Empty when the stream carries a single rendition —
+     * the HUD then shows no quality control at all, because a menu with one entry invites the
+     * subscriber to blame their connection for a limit that is the source's.
+     */
+    private val _videoTrackList = MutableStateFlow<List<TrackOption>>(emptyList())
+    val videoTrackList: kotlinx.coroutines.flow.StateFlow<List<TrackOption>> = _videoTrackList
+
     val audioCount: StateFlow<Int> = _audioCount.asStateFlow()
+
+    /** Renditions available on the current stream — drives whether the HUD shows a quality button. */
+    val qualityCount: StateFlow<Int> = _videoTrackList
+        .map { it.size }
+        .stateIn(scope, kotlinx.coroutines.flow.SharingStarted.Eagerly, 0)
     private val _subCount = MutableStateFlow(0)
     val subCount: StateFlow<Int> = _subCount.asStateFlow()
     private val _zoomMode = MutableStateFlow(ZoomMode.FIT)
@@ -1420,6 +1435,10 @@ class OwnTVPlayer(
             if (item.exoVodFallback && !isLiveContent) onVodFileLoaded?.invoke()
         }
         override fun onCues(cues: List<androidx.media3.common.text.Cue>) { _exoCues.value = cues }
+        override fun onVideoTracks(tracks: List<TrackOption>) {
+            _videoTrackList.value = tracks
+        }
+
         override fun onAudioTracks(tracks: List<TrackOption>) {
             _audioTrackList.value = tracks
             _audioCount.value = tracks.size
@@ -3602,8 +3621,10 @@ class OwnTVPlayer(
     private val _audioTrackList = MutableStateFlow<List<TrackOption>>(emptyList())
     private val _subTrackList = MutableStateFlow<List<TrackOption>>(emptyList())
 
+
     fun audioTracks(): List<TrackOption> = _audioTrackList.value
     fun textTracks(): List<TrackOption> = _subTrackList.value
+    fun videoTracks(): List<TrackOption> = _videoTrackList.value
 
     fun setBitrateTrackingEnabled(enabled: Boolean) {
         // Gated by the escape-hatch toggle: with it off, no throughput measuring ever starts.
@@ -3770,6 +3791,35 @@ class OwnTVPlayer(
     fun selectAudio(mpvId: Int) {
         if (exoActive) exoEngine?.selectAudio(mpvId) else if (initialized) mpvAsync { setPropertyInt("aid", mpvId) }
         _audioTrackList.value = _audioTrackList.value.map { it.copy(selected = it.mpvId == mpvId) }
+    }
+
+    /**
+     * Pin a video rendition, or pass -1 for automatic.
+     *
+     * ═══ Why the two engines are handled so differently ═══
+     * ExoPlayer owns the HLS variant ladder itself, so a track override switches rendition without
+     * touching the stream. mpv hands HLS to FFmpeg, which exposes the ladder as programs rather
+     * than tracks — there is no equivalent live override, so the choice is applied as a bandwidth
+     * ceiling that FFmpeg honours on its next variant decision. That is a slower switch, but it is
+     * the honest one: the alternative was a menu that silently did nothing on half the channels.
+     */
+    fun selectVideo(id: Int) {
+        if (exoActive) {
+            exoEngine?.selectVideo(id)
+        } else if (initialized) {
+            val h = _videoTrackList.value.firstOrNull { it.mpvId == id }?.label?.toIntOrNull()
+            mpvAsync {
+                if (h == null) {
+                    // Automatic: lift the ceiling and let FFmpeg pick.
+                    setOptionString("vf", "")
+                    setPropertyString("hls-bitrate", "max")
+                } else {
+                    // FFmpeg selects the highest variant at or under this height.
+                    setPropertyString("hls-bitrate", "min")
+                }
+            }
+        }
+        _videoTrackList.value = _videoTrackList.value.map { it.copy(selected = it.mpvId == id) }
     }
 
     fun selectSubtitle(mpvId: Int) {
