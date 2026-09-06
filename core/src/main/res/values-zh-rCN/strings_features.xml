@@ -123,8 +123,8 @@
     <string name="update_not_enough_space">存储空间不足，无法更新。请释放约 <xliff:g id="size">%1$s</xliff:g> 后重试。</string>
     <string name="update_damaged_download">更新未完整下载。请检查网络连接后重试。</string>
     <string name="update_install_rejected">系统安装程序拒绝了此更新：<xliff:g id="reason">%1$s</xliff:g></string>
-    <string name="update_ready">OwnTV v<xliff:g id="available">%1$s</xliff:g> 已准备就绪（当前版本为 v<xliff:g id="current">%2$s</xliff:g>）。</string>
-    <string name="recovery_title">OwnTV 无法打开其数据库</string>
+    <string name="update_ready">SalamTV v<xliff:g id="available">%1$s</xliff:g> 已准备就绪（当前版本为 v<xliff:g id="current">%2$s</xliff:g>）。</string>
+    <string name="recovery_title">SalamTV 无法打开其数据库</string>
     <string name="recovery_data_safe_full">您的用户档案、播放列表、收藏夹和观看记录并未被删除——这是数据库升级失败，数据仍保存在此设备上。\n\n请报告此问题，以便修复，并附上下方的消息。</string>
     <string name="recovery_retry">重试</string>
     <string name="recovery_backup_hint">如果您有备份文件，可以重置应用，然后再从备份恢复。重置会删除存储在此设备上的所有内容。</string>

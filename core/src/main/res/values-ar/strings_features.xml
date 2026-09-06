@@ -143,8 +143,8 @@
     <string name="update_not_enough_space">لا توجد مساحة تخزين كافية للتحديث. أفرِغ نحو <xliff:g id="size">%1$s</xliff:g> ثم أعد المحاولة.</string>
     <string name="update_damaged_download">لم يكتمل تنزيل التحديث. تحقّق من اتصالك ثم أعد المحاولة.</string>
     <string name="update_install_rejected">رفض مثبّت النظام التحديث: <xliff:g id="reason">%1$s</xliff:g></string>
-    <string name="update_ready">OwnTV v<xliff:g id="available">%1$s</xliff:g> جاهز (لديك v<xliff:g id="current">%2$s</xliff:g>).</string>
-    <string name="recovery_title">تعذّر على OwnTV فتح قاعدة بياناته</string>
+    <string name="update_ready">SalamTV v<xliff:g id="available">%1$s</xliff:g> جاهز (لديك v<xliff:g id="current">%2$s</xliff:g>).</string>
+    <string name="recovery_title">تعذّر على SalamTV فتح قاعدة بياناته</string>
     <string name="recovery_data_safe_full">لم تُحذف ملفاتك الشخصية أو قوائم التشغيل أو المفضّلة أو سجل المشاهدة — فهذا إخفاق في ترقية قاعدة البيانات، وما تزال البيانات على هذا الجهاز.\n\nيرجى الإبلاغ عن ذلك حتى يمكن إصلاحه، وإرفاق الرسالة أدناه.</string>
     <string name="recovery_retry">إعادة المحاولة</string>
     <string name="recovery_backup_hint">إذا كان لديك ملف نسخة احتياطية، فيمكنك إعادة ضبط التطبيق ثم الاستعادة منه بعد ذلك. تؤدي إعادة الضبط إلى حذف كل ما هو مخزّن على هذا الجهاز.</string>

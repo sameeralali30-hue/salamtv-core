@@ -30,9 +30,9 @@
     <string name="setup_welcome_tagline">O seu próprio leitor de IPTV.</string>
     <string name="setup_get_started">Começar</string>
     <string name="setup_before_you_start">Antes de começar</string>
-    <string name="setup_disclaimer">O OwnTV é apenas um leitor multimédia. Não inclui canais, listas de reprodução nem conteúdos. É responsável por adicionar as suas próprias origens Xtream, M3U ou Stalker às quais tenha acesso legal.</string>
+    <string name="setup_disclaimer">O SalamTV é apenas um leitor multimédia. Não inclui canais, listas de reprodução nem conteúdos. É responsável por adicionar as suas próprias origens Xtream, M3U ou Stalker às quais tenha acesso legal.</string>
     <string name="setup_i_understand">Compreendo</string>
-    <string name="setup_set_up_owntv">Configurar o OwnTV</string>
+    <string name="setup_set_up_owntv">Configurar o SalamTV</string>
     <string name="setup_setup_choice_description">Comece de novo ou recupere os seus perfis, listas de reprodução e favoritos a partir de um ficheiro de cópia de segurança.</string>
     <string name="setup_new_profile">Novo perfil</string>
     <string name="setup_create_profile_add_sources">Criar um perfil e adicionar origens</string>
@@ -105,7 +105,7 @@
     <string name="setup_edit_source">Editar origem</string>
     <string name="setup_add_your_source">Adicionar a sua origem</string>
     <string name="setup_edit_source_description">Atualize os dados desta origem ou altere a respetiva definição de atualização automática.</string>
-    <string name="setup_byo_source_description">O OwnTV é um leitor — adicione a sua própria origem Xtream, M3U ou Stalker.</string>
+    <string name="setup_byo_source_description">O SalamTV é um leitor — adicione a sua própria origem Xtream, M3U ou Stalker.</string>
     <string name="setup_xtream">Xtream</string>
     <string name="setup_m3u">M3U / M3U8</string>
     <string name="setup_stalker_mac">Stalker (MAC)</string>
@@ -163,7 +163,7 @@
     <string name="setup_mag254">MAG254</string>
     <string name="setup_mag270">MAG270</string>
     <string name="setup_mag420">MAG420</string>
-    <string name="companion_pin_page_title">OwnTV — Introduzir PIN</string>
+    <string name="companion_pin_page_title">SalamTV — Introduzir PIN</string>
     <string name="companion_pin_heading">Introduza o PIN</string>
     <string name="companion_pin_description">Introduza o PIN de 6 dígitos apresentado na TV para continuar.</string>
     <string name="companion_pin_placeholder">••••••</string>
@@ -185,14 +185,14 @@
     <string name="companion_open_subtitles_description">Inicie sessão no OpenSubtitles para a sua TV. Adicione os seus próprios dados de API abaixo apenas se os tiver.</string>
     <string name="companion_service_config_sent">Os dados de ligação já estão à espera na sua TV. Reveja-os e guarde-os aí.</string>
     <string name="companion_service_config_again">Enviar outros dados de ligação</string>
-    <string name="companion_add_page_title">OwnTV — Adicionar origem</string>
+    <string name="companion_add_page_title">SalamTV — Adicionar origem</string>
     <string name="companion_add_heading">Adicionar uma origem</string>
     <string name="companion_add_description">Preencha os dados de uma origem e prima Enviar. Esta aparece na TV — pegue no comando e prima Iniciar importação quando estiver tudo pronto.</string>
     <string name="companion_default_playlist">Lista de reprodução predefinida</string>
     <string name="companion_send_to_tv">Enviar para a TV</string>
     <string name="companion_sync_xtream_hint">O que sincronizar — Agora importa primeiro, Mais tarde sincroniza em segundo plano e Desativado nunca é obtido.</string>
     <string name="companion_sync_stalker_hint">O que sincronizar — TV em direto utiliza Agora por predefinição; Filmes/Séries utilizam Mais tarde por predefinição (o VOD do Stalker é lento).</string>
-    <string name="companion_saved_page_title">OwnTV — Enviado</string>
+    <string name="companion_saved_page_title">SalamTV — Enviado</string>
     <string name="companion_saved_heading">Enviado para a TV ✓</string>
     <string name="companion_saved_source_body"><xliff:g id="name">%1$s</xliff:g> encontra-se agora no ecrã Adicionar uma origem da TV. Verifique aí os dados e prima Iniciar importação com o comando.</string>
     <string name="companion_saved_send_another">Enviar outra origem</string>
@@ -200,9 +200,9 @@
     <string name="companion_saved_backup_link">Enviar outro ficheiro</string>
     <string name="companion_saved_image_body">A sua imagem é agora a imagem de fundo da TV.</string>
     <string name="companion_saved_image_link">Enviar outra imagem</string>
-    <string name="companion_backup_page_title">OwnTV — Restaurar cópia de segurança</string>
+    <string name="companion_backup_page_title">SalamTV — Restaurar cópia de segurança</string>
     <string name="companion_backup_heading">Restaurar uma cópia de segurança</string>
-    <string name="companion_backup_description">Escolha um ficheiro de cópia de segurança do OwnTV (.own ou um .json mais antigo) e prima Enviar. Este é transferido para a TV — pegue no comando e escolha aí o que pretende restaurar.</string>
+    <string name="companion_backup_description">Escolha um ficheiro de cópia de segurança do SalamTV (.own ou um .json mais antigo) e prima Enviar. Este é transferido para a TV — pegue no comando e escolha aí o que pretende restaurar.</string>
     <string name="companion_backup_file">Ficheiro de cópia de segurança</string>
     <string name="companion_choose_backup">Escolha primeiro um ficheiro de cópia de segurança.</string>
     <string name="companion_playlist_file">Ou carregue um ficheiro de lista</string>
@@ -211,15 +211,15 @@
     <string name="companion_upload_failed">Falha ao carregar (HTTP <xliff:g id="status">%1$d</xliff:g>). Verifique o PIN e tente novamente.</string>
     <string name="companion_could_not_reach">Não foi possível estabelecer ligação à TV. Mantenha-se na mesma rede Wi-Fi e tente novamente.</string>
     <string name="companion_could_not_read">Não foi possível ler esse ficheiro.</string>
-    <string name="companion_image_page_title">OwnTV — Imagem de fundo</string>
+    <string name="companion_image_page_title">SalamTV — Imagem de fundo</string>
     <string name="companion_image_heading">Enviar uma imagem de fundo</string>
     <string name="companion_image_description">Escolha uma fotografia (JPG, PNG ou WebP) e prima Enviar. Esta torna-se a imagem de fundo por trás da interface da TV.</string>
     <string name="companion_image_file">Ficheiro de imagem</string>
     <string name="companion_choose_image">Escolha primeiro uma imagem.</string>
     <string name="companion_image_too_large">Essa imagem é demasiado grande (máximo de 25 MB).</string>
-    <string name="companion_download_page_title">OwnTV — Transferir cópia de segurança</string>
+    <string name="companion_download_page_title">SalamTV — Transferir cópia de segurança</string>
     <string name="companion_download_heading">Transferir a sua cópia de segurança</string>
-    <string name="companion_download_description">A sua TV preparou um ficheiro de cópia de segurança do OwnTV. Toque no botão para o guardar neste dispositivo (owntv-backup.own). Guarde-o num local seguro — poderá utilizá-lo para restaurar os dados mais tarde.</string>
+    <string name="companion_download_description">A sua TV preparou um ficheiro de cópia de segurança do SalamTV. Toque no botão para o guardar neste dispositivo (owntv-backup.own). Guarde-o num local seguro — poderá utilizá-lo para restaurar os dados mais tarde.</string>
     <string name="companion_download_backup">Transferir cópia de segurança</string>
     <string name="companion_error_bad_request">Pedido inválido</string>
     <string name="companion_error_body_too_large">O corpo do pedido é demasiado grande.</string>

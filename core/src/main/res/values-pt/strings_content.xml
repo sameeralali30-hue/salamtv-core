@@ -38,7 +38,7 @@
     <string name="content_genre_scifi">Ficção científica</string>
     <string name="content_genre_series">Séries</string>
     <string name="content_genre_sport">Esportes</string>
-    <string name="content_exit_owntv">Sair do OwnTV?</string>
+    <string name="content_exit_owntv">Sair do SalamTV?</string>
     <string name="content_exit_confirmation">Tem certeza de que deseja fechar o aplicativo?</string>
     <string name="content_restore_incomplete_title">Uma restauração não foi concluída</string>
     <string name="content_restore_incomplete_message">O aplicativo foi fechado durante a restauração de <xliff:g id="description">%1$s</xliff:g>, então parte do conteúdo pode estar faltando. Nada foi excluído — execute novamente a mesma restauração em Configurações → Cópia de segurança e restauração para recuperar o restante.</string>
@@ -331,7 +331,7 @@
     <string name="content_epg_favourite">Favoritar</string>
     <string name="content_epg_unfavourite">Remover dos favoritos</string>
     <string name="content_epg_player_choice_description">Defina uma escolha permanente em Configurações › Programação retroativa.</string>
-    <string name="content_epg_own_player">Reprodutor do OwnTV</string>
+    <string name="content_epg_own_player">Reprodutor do SalamTV</string>
     <string name="content_epg_external_player">Reprodutor externo</string>
     <string name="content_epg_time_offset">Deslocamento de horário do EPG</string>
     <string name="content_epg_shift_minutes"><xliff:g id="sign">%1$s</xliff:g><xliff:g id="minutes">%2$s</xliff:g>min</string>

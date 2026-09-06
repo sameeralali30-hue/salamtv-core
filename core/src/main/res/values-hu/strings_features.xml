@@ -127,8 +127,8 @@
     <string name="update_not_enough_space">Nincs elég szabad hely a frissítéshez. Szabadíts fel körülbelül <xliff:g id="size">%1$s</xliff:g> helyet, és próbáld újra.</string>
     <string name="update_damaged_download">A frissítés nem töltődött le teljesen. Ellenőrizd a kapcsolatot, és próbáld újra.</string>
     <string name="update_install_rejected">A rendszer telepítője elutasította a frissítést: <xliff:g id="reason">%1$s</xliff:g></string>
-    <string name="update_ready">Az OwnTV v<xliff:g id="available">%1$s</xliff:g> készen áll (jelenleg a v<xliff:g id="current">%2$s</xliff:g> fut).</string>
-    <string name="recovery_title">Az OwnTV nem tudta megnyitni az adatbázisát</string>
+    <string name="update_ready">Az SalamTV v<xliff:g id="available">%1$s</xliff:g> készen áll (jelenleg a v<xliff:g id="current">%2$s</xliff:g> fut).</string>
+    <string name="recovery_title">Az SalamTV nem tudta megnyitni az adatbázisát</string>
     <string name="recovery_data_safe_full">A profiljaid, lejátszási listáid, kedvenceid és előzményeid NEM törlődtek — az adatbázis frissítése hiúsult meg, az adatok továbbra is ezen az eszközön vannak.\n\nKérjük, jelentsd ezt, hogy javíthassuk a hibát, és csatold az alábbi üzenetet.</string>
     <string name="recovery_retry">Újra</string>
     <string name="recovery_backup_hint">Ha van biztonsági mentésed, visszaállíthatod az alkalmazást alaphelyzetbe, majd visszatöltheted a mentést. A visszaállítás minden, ezen az eszközön tárolt adatot töröl.</string>

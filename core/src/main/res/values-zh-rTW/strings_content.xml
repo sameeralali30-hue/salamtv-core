@@ -30,7 +30,7 @@
     <string name="content_genre_scifi">科幻</string>
     <string name="content_genre_series">影集</string>
     <string name="content_genre_sport">體育</string>
-    <string name="content_exit_owntv">要結束 OwnTV 嗎？</string>
+    <string name="content_exit_owntv">要結束 SalamTV 嗎？</string>
     <string name="content_exit_confirmation">確定要關閉應用程式嗎？</string>
     <string name="content_restore_incomplete_title">還原未完成</string>
     <string name="content_restore_incomplete_message">應用程式在還原 <xliff:g id="description">%1$s</xliff:g> 時關閉，因此部分內容可能遺失。沒有刪除任何內容——請前往「設定 → 備份與還原」再次執行相同的還原，以補齊其餘內容。</string>
@@ -303,7 +303,7 @@
     <string name="content_epg_favourite">加入最愛</string>
     <string name="content_epg_unfavourite">從最愛中移除</string>
     <string name="content_epg_player_choice_description">前往「設定 › 回看」設定永久選項。</string>
-    <string name="content_epg_own_player">OwnTV 播放器</string>
+    <string name="content_epg_own_player">SalamTV 播放器</string>
     <string name="content_epg_external_player">外部播放器</string>
     <string name="content_epg_time_offset">電子節目表時間偏移</string>
     <string name="content_epg_shift_minutes"><xliff:g id="sign">%1$s</xliff:g><xliff:g id="minutes">%2$s</xliff:g>分</string>

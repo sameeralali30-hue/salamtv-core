@@ -13,7 +13,7 @@
 # AGP 9.3.x brings its own Kotlin (2.2.10), but the Compose compiler plugin below pulls the
 # Kotlin Gradle plugin up to the version pinned here — so `kotlin` is what actually compiles the
 # library. Keep the Compose compiler plugin on this exact version. Verified 2026-08-27.
-agp = "9.3.2"
+agp = "9.4.0"
 kotlin = "2.4.10"
 
 # --- AndroidX / Jetpack ---

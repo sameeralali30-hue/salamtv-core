@@ -386,20 +386,29 @@ class TmdbProvider(
         /** Direct TMDB API base (Tier 2, user's own key). */
         const val TMDB_DIRECT_BASE = "https://api.themoviedb.org"
 
-        /** Tier 0 default caching Worker (plan §0.5) — maintainer's key lives in the Worker secret,
-         *  never in the APK. The app never sends api_key on this tier; the Worker injects it.
-         *
-         *  Behind a Cloudflare edge rule that refuses anything without the right `x-owntv-key`, so only
-         *  a build that carries the key can use it. */
+        /** Upstream's Tier 0 Worker, behind a Cloudflare edge rule keyed on `x-owntv-key`. */
         const val DEFAULT_WORKER_BASE = "https://tmdb.owntv.me"
 
-        /** The original, unprotected address. Kept as the fallback for builds with no edge key — fork CI
-         *  and fresh clones have no secret and would otherwise get a 403 for every lookup. */
+        /** Upstream's original, unprotected Worker — the fallback for builds with no edge key. */
         const val LEGACY_WORKER_BASE = "https://owntv-tmdb-meta.xiannero.workers.dev"
 
-        /** Protected base when this build carries the edge key, the open legacy one when it does not. */
-        fun defaultWorkerBase(): String =
-            if (CoreBuildInfo.edgeKey.isBlank()) LEGACY_WORKER_BASE else DEFAULT_WORKER_BASE
+        /**
+         * SalamTV's own TMDB-shaped proxy. The key lives in the panel's settings table, never in
+         * the APK, and this build never sends `api_key` — the proxy appends it.
+         *
+         * Why this replaces the upstream Worker as the default: this build carries no `edgeKey`,
+         * so it would otherwise fall back to LEGACY_WORKER_BASE — a **third party's server and
+         * TMDB quota**. Every subscriber lookup would spend someone else's allowance, travel
+         * through their infrastructure, and break the day they retire it. None of that is
+         * acceptable for a paid service, and none of it is theirs to owe us.
+         *
+         * The user-facing tiers are untouched: entering a personal TMDB key still goes direct
+         * (Tier 2), and a custom server URL still overrides everything (Tier 3).
+         */
+        const val SALAMTV_TMDB_BASE = "https://salamtv1.mohamedalalichatbot.xyz/iptv/tmdb"
+
+        /** Default base for this build. */
+        fun defaultWorkerBase(): String = SALAMTV_TMDB_BASE
 
         /** TMDB image CDN — poster/backdrop paths render straight from here, no key. */
         const val IMAGE_BASE = "https://image.tmdb.org/t/p"

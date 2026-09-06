@@ -34,7 +34,7 @@
     <string name="content_genre_scifi">Science fiction</string>
     <string name="content_genre_series">Serier</string>
     <string name="content_genre_sport">Sport</string>
-    <string name="content_exit_owntv">Afslut OwnTV?</string>
+    <string name="content_exit_owntv">Afslut SalamTV?</string>
     <string name="content_exit_confirmation">Er du sikker på, at du vil lukke appen?</string>
     <string name="content_restore_incomplete_title">En gendannelse blev ikke færdig</string>
     <string name="content_restore_incomplete_message">Appen lukkede under gendannelsen af <xliff:g id="description">%1$s</xliff:g>, så noget af det mangler muligvis. Intet blev slettet — kør den samme gendannelse igen via Indstillinger → Sikkerhedskopi og gendannelse for at udfylde resten.</string>
@@ -317,7 +317,7 @@
     <string name="content_epg_favourite">Føj til favoritter</string>
     <string name="content_epg_unfavourite">Fjern fra favoritter</string>
     <string name="content_epg_player_choice_description">Angiv et permanent valg under Indstillinger › Arkiv.</string>
-    <string name="content_epg_own_player">OwnTV-afspiller</string>
+    <string name="content_epg_own_player">SalamTV-afspiller</string>
     <string name="content_epg_external_player">Ekstern afspiller</string>
     <string name="content_epg_time_offset">EPG-tidsforskydning</string>
     <string name="content_epg_shift_minutes"><xliff:g id="sign">%1$s</xliff:g><xliff:g id="minutes">%2$s</xliff:g> min</string>

@@ -181,8 +181,18 @@ class OpenSubtitlesClient(
     companion object {
         private const val TAG = "OpenSubtitles"
 
-        /** The maintainer's deployment of worker/opensub/ — holds the consumer key server-side. */
-        private const val WORKER_BASE = "https://my-owntv-opensub.xiannero.workers.dev"
+        /** Upstream's deployment of worker/opensub/ — no longer used by this build. */
+        private const val UPSTREAM_WORKER_BASE = "https://my-owntv-opensub.xiannero.workers.dev"
+
+        /**
+         * SalamTV's own OpenSubtitles proxy. The consumer key lives in the panel's settings table
+         * and is appended server-side; this build never sends `Api-Key`.
+         *
+         * Same reason as the TMDB switch: this build carries no `edgeKey`, so the default was a
+         * third party's Worker and a third party's consumer key — their download quota spent on
+         * our subscribers, and their outage becoming ours.
+         */
+        private const val WORKER_BASE = "https://salamtv1.mohamedalalichatbot.xyz/iptv/opensub"
 
         /** Standard upstream; login's base_url may switch a VIP account to vip-api (plan §5.4). */
         const val DEFAULT_HOST = "api.opensubtitles.com"

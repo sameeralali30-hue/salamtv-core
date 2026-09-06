@@ -34,7 +34,7 @@
     <string name="content_genre_scifi">Science fiction</string>
     <string name="content_genre_series">Serier</string>
     <string name="content_genre_sport">Sport</string>
-    <string name="content_exit_owntv">Avsluta OwnTV?</string>
+    <string name="content_exit_owntv">Avsluta SalamTV?</string>
     <string name="content_exit_confirmation">Är du säker på att du vill stänga appen?</string>
     <string name="content_restore_incomplete_title">En återställning slutfördes inte</string>
     <string name="content_restore_incomplete_message">Appen stängdes medan <xliff:g id="description">%1$s</xliff:g> återställdes, så en del kan saknas. Inget raderades — kör samma återställning igen via Inställningar → Säkerhetskopiering och återställning för att fylla i resten.</string>
@@ -317,7 +317,7 @@
     <string name="content_epg_favourite">Favoritmarkera</string>
     <string name="content_epg_unfavourite">Ta bort som favorit</string>
     <string name="content_epg_player_choice_description">Ange ett permanent val i Inställningar › Tv-arkiv.</string>
-    <string name="content_epg_own_player">OwnTV-spelare</string>
+    <string name="content_epg_own_player">SalamTV-spelare</string>
     <string name="content_epg_external_player">Extern spelare</string>
     <string name="content_epg_time_offset">EPG-tidsförskjutning</string>
     <string name="content_epg_shift_minutes"><xliff:g id="sign">%1$s</xliff:g><xliff:g id="minutes">%2$s</xliff:g>m</string>

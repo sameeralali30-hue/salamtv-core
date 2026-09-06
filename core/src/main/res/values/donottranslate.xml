@@ -5,8 +5,8 @@
   from translation export. Keep them here, not in strings*.xml.
 -->
 <resources>
-    <string name="app_name" translatable="false">OwnTV</string>
-    <string name="brand_own" translatable="false">Own</string>
+    <string name="app_name" translatable="false">SalamTV</string>
+    <string name="brand_own" translatable="false">Salam</string>
     <string name="brand_tv" translatable="false">TV</string>
     <string name="settings_player_exoplayer" translatable="false">ExoPlayer</string>
     <string name="settings_player_mpv" translatable="false">mpv</string>

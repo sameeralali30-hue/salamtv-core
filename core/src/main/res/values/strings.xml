@@ -38,7 +38,7 @@
     <!-- Translators: Text-field label for a name input. -->
     <string name="common_name">Name</string>
     <!-- Translators: Default user display name placeholder. -->
-    <string name="common_own_tv_user">OwnTV User</string>
+    <string name="common_own_tv_user">SalamTV User</string>
     <!-- Translators: Button or action to switch to a different profile. -->
     <string name="common_switch_profile">Switch Profile</string>
     <!-- Translators: Short label for proxy settings or status. -->

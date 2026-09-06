@@ -49,7 +49,7 @@
     <string name="settings_dynamic">Dynamisch</string>
     <string name="settings_http_proxy">HTTP-Proxy</string>
     <string name="settings_use_proxy">Proxy verwenden</string>
-    <string name="settings_proxy_description">Den gesamten Datenverkehr und die gesamte Wiedergabe von OwnTV über einen HTTP-Proxy leiten.</string>
+    <string name="settings_proxy_description">Den gesamten Datenverkehr und die gesamte Wiedergabe von SalamTV über einen HTTP-Proxy leiten.</string>
     <string name="settings_host">Host</string>
     <string name="settings_proxy_host_hint">proxy.example.com</string>
     <string name="settings_port">Port</string>
@@ -155,7 +155,7 @@
         <item quantity="other"><xliff:g id="remaining">%1$d</xliff:g> / <xliff:g id="limit">%2$d</xliff:g> übrig</item>
     </plurals>
     <string name="settings_metadata_active_source">Aktive Quelle</string>
-    <string name="settings_metadata_shared_worker_description">OwnTV Worker · keine Einrichtung</string>
+    <string name="settings_metadata_shared_worker_description">SalamTV Worker · keine Einrichtung</string>
     <string name="settings_metadata_connection">Verbindung</string>
     <string name="settings_metadata_remote_advanced">Erweiterte TMDB-Daten abrufen</string>
     <string name="settings_metadata_remote_advanced_description">Verwende deinen eigenen TMDB-API-Schlüssel oder einen selbst gehosteten Worker statt der gemeinsamen Standardeinstellung.</string>
@@ -166,8 +166,8 @@
     <string name="settings_metadata_server_label">Server</string>
     <string name="settings_metadata_refills_label">Auffüllung um</string>
     <string name="settings_metadata_clear_advanced_title">Eigenen Schlüssel nicht mehr verwenden?</string>
-    <string name="settings_metadata_clear_advanced_message">Ihr TMDB-API-Schlüssel und die Adresse Ihres eigenen Servers werden von diesem Gerät gelöscht, und OwnTV kehrt zum integrierten gemeinsamen Dienst mit seinem Tagesanteil zurück.</string>
-    <string name="settings_metadata_fair_share">Der integrierte Metadatendienst wird von allen OwnTV-Nutzern gemeinsam genutzt, daher erhält jedes Gerät täglich seinen eigenen Anteil. Wenn Ihr Anteil aufgebraucht ist, pausieren Poster und Beschreibungen, bis er wieder aufgefüllt wird — die Informationen aus Ihrer eigenen Playlist funktionieren weiterhin normal. Ein eigener TMDB-API-Schlüssel oder Server hebt diese Beschränkung auf: Er ist kostenlos, und ein persönlicher Schlüssel hat praktisch kein Limit.</string>
+    <string name="settings_metadata_clear_advanced_message">Ihr TMDB-API-Schlüssel und die Adresse Ihres eigenen Servers werden von diesem Gerät gelöscht, und SalamTV kehrt zum integrierten gemeinsamen Dienst mit seinem Tagesanteil zurück.</string>
+    <string name="settings_metadata_fair_share">Der integrierte Metadatendienst wird von allen SalamTV-Nutzern gemeinsam genutzt, daher erhält jedes Gerät täglich seinen eigenen Anteil. Wenn Ihr Anteil aufgebraucht ist, pausieren Poster und Beschreibungen, bis er wieder aufgefüllt wird — die Informationen aus Ihrer eigenen Playlist funktionieren weiterhin normal. Ein eigener TMDB-API-Schlüssel oder Server hebt diese Beschränkung auf: Er ist kostenlos, und ein persönlicher Schlüssel hat praktisch kein Limit.</string>
     <string name="settings_metadata_limit_reached">Tagesanteil an Metadaten aufgebraucht — fügen Sie unter Einstellungen → Metadaten Ihren eigenen TMDB-Schlüssel hinzu, um diese Beschränkung aufzuheben.</string>
     <string name="settings_metadata_language">Metadatensprache</string>
     <string name="settings_metadata_language_description">Sprache für Handlungen, Genres und Titel von TMDB. Felder, die TMDB nicht übersetzt hat, bleiben auf Englisch. Details werden pro Sprache zwischengespeichert, das Zurückwechseln erfolgt daher sofort.</string>
@@ -290,7 +290,7 @@
     <string name="settings_network_group">Netzwerk</string>
     <string name="settings_app_group">App</string>
     <string name="settings_app_startup">App-Start</string>
-    <string name="settings_app_startup_description">Was OwnTV beim Start öffnet</string>
+    <string name="settings_app_startup_description">Was SalamTV beim Start öffnet</string>
     <string name="settings_check_updates">Auf Updates prüfen</string>
     <string name="settings_check_updates_description">Die neueste Version von GitHub Releases abrufen</string>
     <string name="settings_update_startup">Beim Start auf Updates prüfen</string>
@@ -321,7 +321,7 @@
     <string name="settings_use_color">Diese Farbe verwenden</string>
     <string name="settings_about_version">Version <xliff:g id="version">%1$s</xliff:g></string>
     <string name="settings_about_description_full">Ihr eigener IPTV-Player für Android TV — eine kostenlose, quelloffene App, die ausschließlich als Player dient. Sie stellt weder Sender noch Inhalte bereit; Sie nutzen Ihre eigenen legal zugänglichen Quellen.</string>
-    <string name="settings_about_license">© 2026 OwnTV · GPLv3-Lizenz</string>
+    <string name="settings_about_license">© 2026 SalamTV · GPLv3-Lizenz</string>
     <string name="settings_join_telegram">Auf Telegram beitreten</string>
     <string name="settings_telegram_qr">QR-Code der Telegram-Gruppe</string>
     <string name="settings_telegram_scan">Scannen Sie den QR-Code, um der Gruppe über Ihr Smartphone beizutreten, oder öffnen Sie den Link oben.</string>
@@ -549,7 +549,7 @@
     <string name="settings_open_subtitles_api_key">OpenSubtitles-Anwendungs-API-Schlüssel</string>
     <string name="settings_worker_server_url">Worker-/Server-URL</string>
     <string name="settings_shared">Gemeinsam</string>
-    <string name="settings_open_subtitles_access_priority">Lasse beide Felder leer, um den gemeinsamen Worker von OwnTV zu nutzen. Eine eigene Worker-URL hat Vorrang vor einem direkten API-Schlüssel. Kontositzungen bleiben profilspezifisch.</string>
+    <string name="settings_open_subtitles_access_priority">Lasse beide Felder leer, um den gemeinsamen Worker von SalamTV zu nutzen. Eine eigene Worker-URL hat Vorrang vor einem direkten API-Schlüssel. Kontositzungen bleiben profilspezifisch.</string>
     <string name="settings_remove_custom_access">Eigenen Zugang entfernen</string>
     <string name="settings_audio">Audio</string>
     <string name="settings_preferred_audio_language">Bevorzugte Audiosprache</string>
@@ -618,7 +618,7 @@
     <string name="settings_guide_synced">Programmübersicht synchronisiert</string>
     <string name="settings_guide_sync_failed">Synchronisierung der Programmübersicht fehlgeschlagen</string>
     <string name="settings_restore_remote_title">Von einem anderen Gerät wiederherstellen</string>
-    <string name="settings_restore_remote_description">Scanne auf einem Telefon, Tablet oder Computer im selben Wi-Fi den QR-Code (oder öffne die URL), gib diese PIN ein, wähle deine OwnTV-Sicherungsdatei aus und tippe auf „An TV senden“. Anschließend wählst du hier aus, was wiederhergestellt werden soll.</string>
+    <string name="settings_restore_remote_description">Scanne auf einem Telefon, Tablet oder Computer im selben Wi-Fi den QR-Code (oder öffne die URL), gib diese PIN ein, wähle deine SalamTV-Sicherungsdatei aus und tippe auf „An TV senden“. Anschließend wählst du hier aus, was wiederhergestellt werden soll.</string>
     <string name="settings_opening_server">Server wird geöffnet…</string>
     <string name="settings_enter_pin_browser">Diese PIN im Browser eingeben</string>
     <string name="settings_companion_qr">QR-Code für die URL der Begleitseite</string>
@@ -644,7 +644,7 @@
     </plurals>
     <string name="settings_catchup_timezone_device">Gerät</string>
     <string name="settings_catchup_player_ask">Immer fragen</string>
-    <string name="settings_catchup_player_internal">OwnTV-Player</string>
+    <string name="settings_catchup_player_internal">SalamTV-Player</string>
     <string name="settings_catchup_player_external">Externer Player</string>
     <string name="settings_soon">BALD</string>
     <string name="settings_download_folder_title">Download-Ordner auswählen</string>
@@ -1001,7 +1001,7 @@
     <string name="settings_move_category_action">Verschieben</string>
     <string name="settings_dns_description">Einen benutzerdefinierten DNS-Server für Domainabfragen verwenden</string>
     <string name="settings_dns_custom">Benutzerdefiniertes DNS</string>
-    <string name="settings_dns_toggle_description">Alle Domainabfragen von OwnTV über einen benutzerdefinierten DNS-Server auflösen.</string>
+    <string name="settings_dns_toggle_description">Alle Domainabfragen von SalamTV über einen benutzerdefinierten DNS-Server auflösen.</string>
     <string name="settings_dns_use_custom">Benutzerdefiniertes DNS verwenden</string>
     <string name="settings_dns_server_missing">Benutzerdefiniertes DNS ist aktiviert, aber es wurde kein Server konfiguriert. Geben Sie eine Serveradresse ein und wählen Sie „Speichern“ oder deaktivieren Sie diese Option.</string>
     <string name="settings_dns_server">DNS-Server</string>
@@ -1048,7 +1048,7 @@
     <string name="settings_live_preroll">Live-Streams vorpuffern</string>
     <string name="settings_live_preroll_description">Legt fest, wie viel Videomaterial vor dem Start eines Live-Senders und nach einem Ruckler erneut vorgepuffert wird. Es handelt sich um eine Menge an Videomaterial, nicht um einen Countdown. Bei „Aus“ startet die Wiedergabe so schnell wie möglich.</string>
     <string name="settings_live_tune_timeout">Sender aufgeben nach</string>
-    <string name="settings_live_tune_timeout_description">Zeigt ein Live-Sender bis dahin kein Bild, hört OwnTV auf und sagt Ihnen Bescheid, statt einen schwarzen Bildschirm stehen zu lassen, während nacheinander alle Player durchprobiert werden. „Nie“ probiert weiter, was bei einem vom Anbieter entfernten Sender deutlich über eine Minute dauern kann. Wartezeiten, die Ihr Anbieter selbst verlangt, zählen nicht mit.</string>
+    <string name="settings_live_tune_timeout_description">Zeigt ein Live-Sender bis dahin kein Bild, hört SalamTV auf und sagt Ihnen Bescheid, statt einen schwarzen Bildschirm stehen zu lassen, während nacheinander alle Player durchprobiert werden. „Nie“ probiert weiter, was bei einem vom Anbieter entfernten Sender deutlich über eine Minute dauern kann. Wartezeiten, die Ihr Anbieter selbst verlangt, zählen nicht mit.</string>
     <string name="settings_live_preroll_per_playlist">Pro Playlist vorpuffern</string>
     <string name="settings_live_preroll_per_playlist_description">Überschreibt die obige Einstellung für eine Playlist, während die anderen Playlists schnell starten.</string>
     <!-- Translators: Title of the per-playlist Live TV engine override row. -->
@@ -1066,7 +1066,7 @@
     <string name="settings_surround_stereo">Nur Stereo</string>
     <string name="settings_surround_auto_description">Auto — Dolby/DTS-Surround ausprobieren und automatisch wieder zu Stereo wechseln, wenn der Fernseher oder die Soundbar den Ton nicht wiedergeben kann. Empfohlen.</string>
     <string name="settings_surround_stereo_description">Nur Stereo — immer in der App dekodieren und reinen 2.0-Ton ausgeben. Verwende diese Option bei TV-Lautsprechern oder einer Stereo-Soundbar oder wenn der Ton dem Bild hinterherhinkt.</string>
-    <string name="settings_surround_forced_description">Surround — Dolby/DTS an einen echten 5.1/7.1-Receiver ausgeben. Wenn der Ton ausfällt oder ruckelt, wechselt OwnTV trotzdem zu Stereo und informiert dich.</string>
+    <string name="settings_surround_forced_description">Surround — Dolby/DTS an einen echten 5.1/7.1-Receiver ausgeben. Wenn der Ton ausfällt oder ruckelt, wechselt SalamTV trotzdem zu Stereo und informiert dich.</string>
     <string name="settings_panel_width">Panelbreite anpassen</string>
     <string name="settings_panel_width_description">Die Kategorie-, Listen- und Vorschau-Panels für Live-TV sowie Filme &amp; Serien in der Größe ändern.</string>
     <string name="settings_search_keywords_epg_offset">epg programmführer zeitversatz verschieben zeitzone ost west stunden</string>
@@ -1097,9 +1097,9 @@
     <string name="settings_panel_width_preview_panel"><xliff:g id="label">%1$s</xliff:g> Panel</string>
     <string name="settings_panel_width_total">Gesamtgröße</string>
     <string name="settings_panel_width_invalid_total">Die Gesamtgröße beträgt <xliff:g id="total">%1$d</xliff:g> %%. Sie muss 100 %% betragen – bitte anpassen.</string>
-    <string name="settings_language_help_translate">Hilf mit, OwnTV in deine Sprache zu übersetzen</string>
-    <string name="settings_language_contribution_description">Scannen Sie den QR-Code oder öffnen Sie den Link, um eine beliebige verfügbare Sprache auszuwählen und in allen sechs Übersetzungsbereichen von OwnTV mitzuwirken.</string>
-    <string name="settings_language_contribution_qr_description">QR-Code für die Übersicht des OwnTV-Übersetzungsprojekts</string>
+    <string name="settings_language_help_translate">Hilf mit, SalamTV in deine Sprache zu übersetzen</string>
+    <string name="settings_language_contribution_description">Scannen Sie den QR-Code oder öffnen Sie den Link, um eine beliebige verfügbare Sprache auszuwählen und in allen sechs Übersetzungsbereichen von SalamTV mitzuwirken.</string>
+    <string name="settings_language_contribution_qr_description">QR-Code für die Übersicht des SalamTV-Übersetzungsprojekts</string>
     <string name="settings_language_contribution_qr_failed">Der QR-Code konnte nicht generiert werden. Verwenden Sie stattdessen den unten angezeigten Link.</string>
     <string name="settings_language_contribution_copy">Link kopieren</string>
     <string name="settings_language_contribution_copied">Link kopiert</string>
@@ -1107,7 +1107,7 @@
     <string name="settings_language_contribution_copy_failed">Der Link konnte nicht kopiert werden. Lesen Sie die oben angezeigte URL ab oder geben Sie sie ein.</string>
     <string name="settings_auto_frame_rate_warning_suffix">Auf diesem Fernseher nicht empfohlen: Vor Android 12 lässt sich die Bildwiederholrate nicht fließend ändern.</string>
     <string name="settings_auto_frame_rate_warning_title">Auf diesem Fernseher nicht empfohlen</string>
-    <string name="settings_auto_frame_rate_warning_description">Auf diesem Gerät läuft Android <xliff:g id="android_version">%1$s</xliff:g>. Vor Android 12 kann der Fernseher OwnTV nicht mitteilen, zu welchen Bildwiederholraten er fließend wechseln kann. Daher kann der Bildschirm beim Wechsel der Bildwiederholrate für ein oder zwei Sekunden schwarz werden – manchmal mehr als einmal während einer Sendung.\n\nWir empfehlen, die automatische Bildwiederholrate hier deaktiviert zu lassen. Wenn Ihr Fernseher sauber umschaltet, aktivieren Sie sie und sehen Sie selbst: Sie können die Einstellung jederzeit wieder ändern.</string>
+    <string name="settings_auto_frame_rate_warning_description">Auf diesem Gerät läuft Android <xliff:g id="android_version">%1$s</xliff:g>. Vor Android 12 kann der Fernseher SalamTV nicht mitteilen, zu welchen Bildwiederholraten er fließend wechseln kann. Daher kann der Bildschirm beim Wechsel der Bildwiederholrate für ein oder zwei Sekunden schwarz werden – manchmal mehr als einmal während einer Sendung.\n\nWir empfehlen, die automatische Bildwiederholrate hier deaktiviert zu lassen. Wenn Ihr Fernseher sauber umschaltet, aktivieren Sie sie und sehen Sie selbst: Sie können die Einstellung jederzeit wieder ändern.</string>
     <string name="settings_auto_frame_rate_keep_off">Deaktiviert lassen</string>
     <string name="settings_auto_frame_rate_turn_on_anyway">Trotzdem aktivieren</string>
     <string name="settings_language_request_workflow">Möchtest du eine Sprache hinzufügen, die nicht aufgeführt ist? Stelle zuerst eine Sprachanfrage. Ein Maintainer registriert sie und bereitet die Basis-Übersetzungsdateien vor; sobald sie auf Hosted Weblate erscheint, kannst du mit dem Übersetzen beginnen.</string>

@@ -303,6 +303,6 @@ class UpdateManager(
         private const val TAG = "UpdateManager"
         private const val SESSION_ENTRY = "owntv-update"
         private const val INSTALL_STATUS_ACTION = "tv.own.owntv.UPDATE_INSTALL_STATUS"
-        const val REPO = "ahXN00/OwnTV"
+        const val REPO = "sameeralali30-hue/salamtv"
     }
 }

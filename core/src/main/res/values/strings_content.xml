@@ -58,7 +58,7 @@
     <!-- Translators: Genre label for Sports content. -->
     <string name="content_genre_sport">Sport</string>
     <!-- Translators: Dialog title for the exit-confirmation dialog. -->
-    <string name="content_exit_owntv">Exit OwnTV?</string>
+    <string name="content_exit_owntv">Exit SalamTV?</string>
     <!-- Translators: Body text in the exit-confirmation dialog. -->
     <string name="content_exit_confirmation">Are you sure you want to close the app?</string>
     <!-- Translators: Dialog title shown when a previous restore was interrupted. -->
@@ -579,8 +579,8 @@
     <string name="content_epg_unfavourite">Unfavorite</string>
     <!-- Translators: Description in the catch-up player-choice dialog. Directs to Settings path. -->
     <string name="content_epg_player_choice_description">Set a permanent choice in Settings \u203a Catch-up.</string>
-    <!-- Translators: Player choice option for catch-up playback using the built-in OwnTV player. "OwnTV" is a brand name. -->
-    <string name="content_epg_own_player">OwnTV player</string>
+    <!-- Translators: Player choice option for catch-up playback using the built-in SalamTV player. "SalamTV" is a brand name. -->
+    <string name="content_epg_own_player">SalamTV player</string>
     <!-- Translators: Player choice option for catch-up playback using an external player app. -->
     <string name="content_epg_external_player">External player</string>
     <!-- Translators: Opens the per-channel adjustment that shifts guide programme times. -->

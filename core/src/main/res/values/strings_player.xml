@@ -475,7 +475,7 @@
     <string name="player_stream_live_buffer">Live buffer</string>
     <!-- Translators: The TV or receiver decodes the compressed audio stream. -->
     <string name="player_stream_audio_passthrough">passthrough (TV/receiver decodes)</string>
-    <!-- Translators: OwnTV decodes audio before sending it to the output device. -->
+    <!-- Translators: SalamTV decodes audio before sending it to the output device. -->
     <string name="player_stream_audio_decoded_in_app">decoded in app</string>
     <!-- Translators: PCM audio-output description. "channels" is a localized channel layout such as stereo or 5.1. -->
     <string name="player_stream_audio_pcm"><xliff:g id="channels">%1$s</xliff:g> PCM</string>
