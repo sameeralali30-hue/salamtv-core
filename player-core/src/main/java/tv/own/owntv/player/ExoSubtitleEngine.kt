@@ -17,7 +17,9 @@ import androidx.media3.datasource.okhttp.OkHttpDataSource
 import androidx.media3.exoplayer.DefaultLoadControl
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
+import androidx.media3.exoplayer.trackselection.AdaptiveTrackSelection
 import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
+import androidx.media3.exoplayer.upstream.DefaultBandwidthMeter
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import tv.own.owntv.core.network.HttpClient
@@ -520,7 +522,30 @@ class ExoSubtitleEngine(
             // tier instead of leaving it uncapped.
             .setTargetBufferBytes(targetBufferBytes(maxBufferMs))
             .build()
-        val trackSelector = DefaultTrackSelector(context).apply {
+        // ═══ لماذا نبدأ بتقدير متواضع للسرعة ═══
+        //
+        // ExoPlayer يختار أوّل جودة بناءً على تقديرٍ ابتدائي يشتقّه من بلد الجهاز — وهو
+        // تقديرٌ بالميغابت. فعلى وصلةٍ حقيقية بربع ميغابت كان يبدأ من 1080p، فلا تصل
+        // صورة أبداً، وينتهي الأمر بالتطبيق إلى السقوط إلى `.ts` بعد خمس عشرة ثانية.
+        //
+        // وثمن ذلك السقوط أكبر من بطء البداية: تدفّق `.ts` يحمل جودةً واحدة، فيختفي
+        // زرّ اختيار الجودة كلّه — لا لأنّ المصدر بلا جودات، بل لأنّنا لم نصل إليها.
+        //
+        // فنبدأ من رتبةٍ تحملها أضعف وصلة، ونجعل الصعود سريعاً: ثلاث ثوانٍ بدل عشر
+        // قبل الترقية. الوصلة الجيّدة تبلغ أعلى جودة خلال ثوانٍ، والوصلة الضعيفة تبدأ
+        // فعلاً بدل أن لا تبدأ.
+        val bandwidthMeter = DefaultBandwidthMeter.Builder(context)
+            .setInitialBitrateEstimate(START_BITRATE_ESTIMATE)
+            .build()
+        val trackSelector = DefaultTrackSelector(
+            context,
+            AdaptiveTrackSelection.Factory(
+                /* minDurationForQualityIncreaseMs = */ 3_000,
+                /* maxDurationForQualityDecreaseMs = */ 25_000,
+                /* minDurationToRetainAfterDiscardMs = */ 25_000,
+                /* bandwidthFraction = */ 0.7f,
+            ),
+        ).apply {
             // Settings → Video player → Preferred audio / subtitle language. These reached mpv only
             // (alang/slang), so an image-subtitle handoff or an ExoPlayer-preferred VOD silently ignored
             // them. An explicit subtitle pick still wins: applyPendingSubtitle sets an override.
@@ -542,6 +567,7 @@ class ExoSubtitleEngine(
             softwareFirst = softwarePreferred,
         )
         return ExoPlayer.Builder(context)
+            .setBandwidthMeter(bandwidthMeter)
             .setRenderersFactory(renderers)
             .setMediaSourceFactory(DefaultMediaSourceFactory(dataSource))
             .setLoadControl(loadControl)
@@ -1077,6 +1103,14 @@ class ExoSubtitleEngine(
         const val TARGET_BUFFER_BYTES = 24 * 1024 * 1024
         const val LOW_RAM_TARGET_BYTES = 16 * 1024 * 1024
         const val BASE_BUFFER_MS = 30_000
+
+        /**
+         * السرعة التي نفترضها قبل أن نقيس شيئاً — 600 كيلوبت في الثانية.
+         *
+         * ليست تخميناً للوصلة، بل رتبةٌ تبدأ عليها كلّ وصلة تقريباً: أدنى جودة في
+         * أغلب قوائم HLS تقع تحتها. والقياس الحقيقي يحلّ محلّها بعد أوّل مقطع.
+         */
+        const val START_BITRATE_ESTIMATE = 600_000L
         /** Armed at load, so it covers the open as well as the decode — see [NoFrameWatchdog] for why
          *  this matches the hero preview's budget rather than the live engine's 8 s. */
         const val NO_VIDEO_TIMEOUT_MS = 12_000L

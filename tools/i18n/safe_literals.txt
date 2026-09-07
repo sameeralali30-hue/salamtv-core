@@ -3238,6 +3238,7 @@
 2	technical	player-core/src/main/java/tv/own/owntv/player/LivePreviewEngine.kt	audio
 1	technical	player-core/src/main/java/tv/own/owntv/player/LivePreviewEngine.kt	audio: ${audioSinkError.message ?: audioSinkError.javaClass.simpleName}
 1	log	player-core/src/main/java/tv/own/owntv/player/LivePreviewEngine.kt	audioWatchdog: $reason — forcing stereo for this session
+1	log	player-core/src/main/java/tv/own/owntv/player/LivePreviewEngine.kt	auto
 1	technical	player-core/src/main/java/tv/own/owntv/player/LivePreviewEngine.kt	av01
 1	technical	player-core/src/main/java/tv/own/owntv/player/LivePreviewEngine.kt	avc
 1	technical	player-core/src/main/java/tv/own/owntv/player/LivePreviewEngine.kt	buffer stopped growing at ${buffered}ms
@@ -3369,6 +3370,8 @@
 1	technical	player-core/src/main/java/tv/own/owntv/player/LivePreviewEngine.kt	variants=${mv.variants.size} audios=${mv.audios.size} subs=${mv.subtitles.size}
 2	technical	player-core/src/main/java/tv/own/owntv/player/LivePreviewEngine.kt	video
 1	log	player-core/src/main/java/tv/own/owntv/player/LivePreviewEngine.kt	video decoder: $decoderName (
+1	log	player-core/src/main/java/tv/own/owntv/player/LivePreviewEngine.kt	video renditions:
+1	log	player-core/src/main/java/tv/own/owntv/player/LivePreviewEngine.kt	video track ->
 1	technical	player-core/src/main/java/tv/own/owntv/player/LivePreviewEngine.kt	videos=${mv.videos.size} muxedAudio=${mv.muxedAudioFormat != null}
 1	technical	player-core/src/main/java/tv/own/owntv/player/LivePreviewEngine.kt	vp9
 1	log	player-core/src/main/java/tv/own/owntv/player/LivePreviewEngine.kt	waiting ${SESSION_RELEASE_MS}ms for the provider to free the account session, then retrying

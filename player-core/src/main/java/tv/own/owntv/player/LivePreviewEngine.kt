@@ -12,6 +12,9 @@ import androidx.media3.common.util.UnstableApi
 import androidx.media3.common.util.Util
 import androidx.media3.datasource.okhttp.OkHttpDataSource
 import androidx.media3.exoplayer.DefaultLoadControl
+import androidx.media3.exoplayer.trackselection.AdaptiveTrackSelection
+import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
+import androidx.media3.exoplayer.upstream.DefaultBandwidthMeter
 import tv.own.owntv.core.player.PlayerBudget
 import tv.own.owntv.core.player.SurroundMode
 import tv.own.owntv.core.settings.LiveBuffer
@@ -153,6 +156,16 @@ class LivePreviewEngine(
     override val zoomMode: StateFlow<ZoomMode> = _zoomMode.asStateFlow()
     private val _audioCount = MutableStateFlow(0)
     override val audioCount: StateFlow<Int> = _audioCount.asStateFlow()
+
+    /**
+     * عدد الجودات في التدفّق الحالي — هو ما يُظهر زرّ الجودة أو يُخفيه.
+     *
+     * ⚠ لم يكن هذا المحرّك ينشر شيئاً هنا، وهو محرّك البثّ المباشر. فبُني زرّ
+     *   الجودة في الواجهة وعمل في مشغّل الأفلام، ولم يظهر لقناةٍ واحدة —
+     *   لأنّ القنوات لا تمرّ بذلك المحرّك أصلاً.
+     */
+    private val _qualityCount = MutableStateFlow(0)
+    override val qualityCount: StateFlow<Int> = _qualityCount.asStateFlow()
     private val _subCount = MutableStateFlow(0)
     override val subCount: StateFlow<Int> = _subCount.asStateFlow()
     // Subtitle cues + an "on" flag. The Compose surface mounts a SubtitleView ONLY while [subtitleOn] (else
@@ -1208,6 +1221,7 @@ class LivePreviewEngine(
         mainHandler.removeCallbacks(openWatchdog)
         mainHandler.removeCallbacks(healthyReset)
         mainHandler.removeCallbacks(audioOnlyConfirmation)
+        _qualityCount.value = 0
         _audioCount.value = 0
         _subCount.value = 0
         _subtitleOn.value = false; _cues.value = emptyList(); _audioUnsupported.value = false
@@ -1384,6 +1398,8 @@ class LivePreviewEngine(
         mainHandler.removeCallbacks(healthyReset)
         frameCounter.set(0); tune.lastFrameCount = 0; tune.everRendered = false; tune.lastProgressPos = -1L; tune.frozenChecks = 0
         tune.audioTrackList = emptyList(); tune.audioSelections = emptyList(); _audioCount.value = 0
+        tune.videoTrackList = emptyList(); tune.videoSelections = emptyList()
+        tune.pinnedVideoId = -1; _qualityCount.value = 0
         tune.textTrackList = emptyList(); tune.textSelections = emptyList(); _subCount.value = 0
         _subtitleOn.value = false; _cues.value = emptyList(); _audioUnsupported.value = false
         _noVideoDetected.value = false; tune.noVideoTriggered = false; tune.readySinceMs = 0L
@@ -2068,6 +2084,27 @@ class LivePreviewEngine(
 
     override fun audioTracks(): List<TrackOption> = tune.audioTrackList
     override fun textTracks(): List<TrackOption> = tune.textTrackList
+    override fun videoTracks(): List<TrackOption> = tune.videoTrackList
+
+    /**
+     * يثبّت جودةً واحدة، أو يعود إلى التلقائي بـ-1.
+     *
+     * العودة إلى التلقائي تُزيل التقييد ولا تثبّت أعلى رتبة: تثبيت الأعلى يُبطل
+     * التكيّف على وصلةٍ لا تحتمله — وهي الحالة التي فتح المشترك القائمة بسببها.
+     */
+    override fun selectVideo(id: Int) {
+        val p = player ?: return
+        val sel = tune.videoSelections.firstOrNull { it.id == id }
+        val params = p.trackSelectionParameters.buildUpon()
+            .clearOverridesOfType(androidx.media3.common.C.TRACK_TYPE_VIDEO)
+        if (sel != null) {
+            params.addOverride(androidx.media3.common.TrackSelectionOverride(sel.group, listOf(sel.trackIndex)))
+        }
+        p.trackSelectionParameters = params.build()
+        tune.pinnedVideoId = id
+        tune.videoTrackList = tune.videoTrackList.map { it.copy(selected = it.mpvId == id) }
+        LiveDiagnosticsLog.event("video track -> " + (sel?.height?.toString() ?: "auto"))
+    }
 
     /** Build the audio + subtitle track lists from the active stream so the HUD menus can switch language /
      *  subtitles (multi-track live channels, or a VOD file imported via M3U). Mirrors [ExoSubtitleEngine]. */
@@ -2126,6 +2163,34 @@ class LivePreviewEngine(
         // Audio Mode excepted, where the app is the one that turned the picture off.
         updateAudioOnlyClassification()
         applyMute()
+        // الجودات: مجموعات الفيديو التي تحمل ارتفاعاً معلناً، من الأعلى إلى الأدنى —
+        // وهو الترتيب الذي يقرأ به المشاهد قائمة جودة. ما لا يعلن ارتفاعه لا اسم له
+        // في القائمة، فلا يُعرض.
+        val video = ArrayList<TrackOption>(); val vSel = ArrayList<VideoSel>(); var vId = 0
+        for (group in tracks.groups) {
+            if (group.type != androidx.media3.common.C.TRACK_TYPE_VIDEO) continue
+            for (i in 0 until group.length) {
+                val h = group.getTrackFormat(i).height
+                if (h <= 0) continue
+                vSel.add(VideoSel(vId, group.mediaTrackGroup, i, h)); vId++
+            }
+        }
+        vSel.sortByDescending { it.height }
+        for (sel in vSel) {
+            video.add(
+                TrackOption(
+                    label = sel.height.toString(),
+                    mpvId = sel.id,
+                    selected = sel.id == tune.pinnedVideoId,
+                    typeIndex = sel.id,
+                    labelKind = TrackLabelKind.AUDIO,
+                ),
+            )
+        }
+        tune.videoTrackList = video; tune.videoSelections = vSel
+        _qualityCount.value = video.size
+        android.util.Log.i(LiveDiagnosticsLog.TAG, "video renditions: " + video.size)
+
         tune.audioTrackList = audio; tune.audioSelections = aSel; _audioCount.value = audio.size
         tune.textTrackList = text; tune.textSelections = tSel; _subCount.value = text.size
         if (tv.own.owntv.core.CoreBuildInfo.debug) {
@@ -2504,7 +2569,33 @@ class LivePreviewEngine(
             forceStereo = !AudioOutputPolicy.allowsMultichannel(surroundMode),
             softwareFirst = !hwDecodingEnabled,
         )
+        // ═══ لماذا نبدأ بتقدير متواضع للسرعة ═══
+        //
+        // ExoPlayer يختار أوّل جودة من تقديرٍ ابتدائي يشتقّه من بلد الجهاز، وهو بالميغابت.
+        // فعلى وصلةٍ بربع ميغابت كان يبدأ من 1080p فلا تصل صورة، وينتهي الأمر بالسقوط
+        // إلى `.ts` بعد خمس عشرة ثانية — قِسنا ذلك: القائمة الرئيسية 2.3 ثانية، وقائمة
+        // المقاطع 1.5، وأوّل مقطع 240p وحده 6.2 ثانية.
+        //
+        // وثمن ذلك السقوط أكبر من بطء البداية: تدفّق `.ts` يحمل جودةً واحدة، فتختفي
+        // قائمة الجودة كلّها — لا لأنّ المصدر بلا جودات بل لأنّنا لم نصل إليها.
+        //
+        // فنبدأ من رتبةٍ تحملها أضعف وصلة، ونجعل الصعود سريعاً: ثلاث ثوانٍ بدل عشر قبل
+        // الترقية. الوصلة الجيّدة تبلغ أعلى جودة خلال ثوانٍ، والضعيفة تبدأ فعلاً.
+        val bandwidthMeter = DefaultBandwidthMeter.Builder(context)
+            .setInitialBitrateEstimate(START_BITRATE_ESTIMATE)
+            .build()
+        val trackSelector = DefaultTrackSelector(
+            context,
+            AdaptiveTrackSelection.Factory(
+                /* minDurationForQualityIncreaseMs = */ 3_000,
+                /* maxDurationForQualityDecreaseMs = */ 25_000,
+                /* minDurationToRetainAfterDiscardMs = */ 25_000,
+                /* bandwidthFraction = */ 0.7f,
+            ),
+        )
         return ExoPlayer.Builder(context)
+            .setBandwidthMeter(bandwidthMeter)
+            .setTrackSelector(trackSelector)
             .setRenderersFactory(renderers)
             .setMediaSourceFactory(DefaultMediaSourceFactory(httpDataSourceFor(currentUa)))
             .setLoadControl(loadControl)
@@ -2656,6 +2747,9 @@ class LivePreviewEngine(
         // from STATE_READY, not from the load, so it is a later starting point than the 12 s the
         // load-armed engines use — see [NoFrameWatchdog] for the full comparison.
         private const val NO_VIDEO_TIMEOUT_MS = 8_000L
+        /** السرعة المفترضة قبل أوّل قياس — 600 كيلوبت/ث؛ رتبةٌ تحملها كل وصلة تقريباً. */
+        private const val START_BITRATE_ESTIMATE = 600_000L
+
         private const val AUDIO_ONLY_CONFIRM_MS = 5_000L // allow late video-track discovery before showing radio badge
         // Re-buffer flap (see [noteRebufferFlap]): this many re-buffers inside the window while the
         // position crawls == the stream is oscillating, not playing. The traced case managed ~8 per
@@ -2710,6 +2804,12 @@ class LivePreviewEngine(
  */
 /** One selectable audio / text track, as the Media3 track group plus the index inside it. */
 internal data class AudioSel(val id: Int, val group: androidx.media3.common.TrackGroup, val trackIndex: Int)
+internal data class VideoSel(
+    val id: Int,
+    val group: androidx.media3.common.TrackGroup,
+    val trackIndex: Int,
+    val height: Int,
+)
 internal data class TextSel(val id: Int, val group: androidx.media3.common.TrackGroup, val trackIndex: Int)
 
 internal data class TuneState(
@@ -2763,6 +2863,10 @@ internal data class TuneState(
     // Audio/text tracks enumerated from the active stream (multi-language live, or a VOD file via M3U).
     var audioTrackList: List<TrackOption> = emptyList(),
     var audioSelections: List<AudioSel> = emptyList(),
+    var videoTrackList: List<TrackOption> = emptyList(),
+    var videoSelections: List<VideoSel> = emptyList(),
+    /** الجودة المثبّتة يدوياً، أو -1 للتلقائي. */
+    var pinnedVideoId: Int = -1,
     var textTrackList: List<TrackOption> = emptyList(),
     var textSelections: List<TextSel> = emptyList(),
     var noVideoTriggered: Boolean = false,
