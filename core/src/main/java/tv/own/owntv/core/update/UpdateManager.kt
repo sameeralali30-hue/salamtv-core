@@ -98,9 +98,9 @@ class UpdateManager(
         scope.launch {
             runCatching {
                 val request = Request.Builder()
-                    .url("https://api.github.com/repos/$REPO/releases/latest")
-                    .header("Accept", "application/vnd.github+json")
-                    .header("User-Agent", "OwnTV")
+                    .url(RELEASE_URL)
+                    .header("Accept", "application/json")
+                    .header("User-Agent", "SalamTV")
                     .build()
                 client.newCall(request).execute().use { resp ->
                     if (!resp.isSuccessful) throw CheckHttpException(resp.code)
@@ -301,5 +301,23 @@ class UpdateManager(
         private const val SESSION_ENTRY = "owntv-update"
         private const val INSTALL_STATUS_ACTION = "tv.own.owntv.UPDATE_INSTALL_STATUS"
         const val REPO = "sameeralali30-hue/salamtv"
+
+        /**
+         * أين يسأل التطبيق عن التحديث.
+         *
+         * ⚠ كان يسأل api.github.com مباشرةً، فجاء 403 على هاتف مشترك ولم ينزّل
+         *   شيئاً. لـGitHub سببان لقول 403 هنا، وكلاهما خارج سيطرتنا: تقييد
+         *   الوصول من شبكاتٍ بعينها، وحدّ ستّين طلباً في الساعة لكلّ عنوان —
+         *   ومزوّد إنترنت كامل خلف عنوان واحد يستهلك الحدّ قبل الظهر.
+         *
+         *   والنتيجة أسوأ ما يمكن: نُصلح عطلاً ثمّ لا يصل الإصلاح إلى من يعاني
+         *   منه، ولا يعرف هو لماذا.
+         *
+         *   فصار الخادم — لا الهاتف — هو من يكلّم GitHub، مرّة كلّ نصف ساعة
+         *   لكلّ المشتركين، ويردّ بنفس شكل GitHub مع رابط ملفٍ على نطاقنا.
+         *   REPO يبقى للعرض في «حول التطبيق»: المصدر مفتوح ورخصة GPL تُلزمنا
+         *   بإظهاره.
+         */
+        val RELEASE_URL: String = tv.own.owntv.core.CoreBuildInfo.updateUrl
     }
 }

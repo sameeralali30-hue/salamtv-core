@@ -22,6 +22,15 @@ object CoreBuildInfo {
     var versionCode: Int = 0
 
     /**
+     * Where the app asks for a new release. Set from the app's `SALAMTV_UPDATE_URL`.
+     *
+     * The default is GitHub's own API so a fresh clone still updates itself; the SalamTV build
+     * overrides it with its panel endpoint, which answers in the same shape. See
+     * `UpdateManager.RELEASE_URL` for why that indirection is not optional in practice.
+     */
+    var updateUrl: String = "https://api.github.com/repos/sameeralali30-hue/salamtv/releases/latest"
+
+    /**
      * Shared secret the default metadata Worker's edge rule requires (`x-owntv-key`). Blank is a
      * supported configuration — forks and fresh clones build without the secret and fall back to the
      * unprotected worker base URL.
