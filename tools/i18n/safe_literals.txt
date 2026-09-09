@@ -21,7 +21,7 @@
 
 2	empty	core/src/main/java/tv/own/owntv/core/CoreBuildInfo.kt	\0
 1	url	core/src/main/java/tv/own/owntv/core/CoreBuildInfo.kt	https://api.github.com/repos/sameeralali30-hue/salamtv/releases/latest
-1	empty	core/src/main/java/tv/own/owntv/core/adverts/AdvertGate.kt	\0
+2	empty	core/src/main/java/tv/own/owntv/core/adverts/AdvertGate.kt	\0
 1	technical	core/src/main/java/tv/own/owntv/core/adverts/AdvertGate.kt	%d-W%02d
 1	technical	core/src/main/java/tv/own/owntv/core/adverts/AdvertGate.kt	-
 1	log	core/src/main/java/tv/own/owntv/core/adverts/AdvertGate.kt	SalamTVAds

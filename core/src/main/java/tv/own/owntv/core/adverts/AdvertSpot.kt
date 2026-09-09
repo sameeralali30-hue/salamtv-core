@@ -245,6 +245,14 @@ data class AdvertDecision(
     val localPath: String,
     /** معرّف اللوحة للقناة، أو "" لموضعٍ لا قناة له. */
     val channelRemoteId: String,
+    /**
+     * اسم القناة التي تُفتح بعده — يُعرض في الطبقة.
+     *
+     * ⚠ يُحمل هنا ولا يُقرأ من `previewChannel`: البوّابة تعمل **قبل** أن
+     *   يُحدَّث ذلك الحقل عمداً، فقراءته أثناء الإعلان تُظهر اسم القناة
+     *   السابقة — خطأٌ صامت لا شيء فيه يبدو معطوباً.
+     */
+    val channelName: String,
     /** يُولَّد عند القرار ويُكتب في السجلّ فوراً — انظر [AdvertImpressionEntity]. */
     val eventUid: String,
 )

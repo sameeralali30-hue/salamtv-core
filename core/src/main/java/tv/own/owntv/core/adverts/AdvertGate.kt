@@ -74,6 +74,7 @@ class AdvertGate(
         channelRemoteId: String,
         categoryRemoteId: String?,
         reason: TuneReason,
+        channelName: String = "",
         placement: Placement = Placement.ON_TUNE,
     ): AdvertDecision? {
         if (!compiledIn) return null
@@ -119,6 +120,7 @@ class AdvertGate(
             placement = placement,
             localPath = path,
             channelRemoteId = channelRemoteId,
+            channelName = channelName,
             eventUid = newEventUid(),
         )
     }
