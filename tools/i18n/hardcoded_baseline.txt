@@ -4,6 +4,63 @@
 # Phase 1 deletes occurrences until this file is empty; the CI guard then becomes absolute.
 # Format: <count>\t<relative path>\t<content with \t/\n escaped>
 
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertRepository.kt	could not restore advert rules: ${it.javaClass.simpleName}
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertRepository.kt	restored ${it.spots.size} advert(s) from disk, rev=${it.rev}
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertRepository.kt	rules.json
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertRepository.kt	tier=${parsed.tier} spots=${parsed.spots.size}
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	\0
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	aborted
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	adv_rev
+3	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	all
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	audience
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	bytes
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	campaign_id
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	cap
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	categories
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	channels
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	completed
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	cooldown
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	daily_minutes_cap
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	duration
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	enabled
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	error
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	ever
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	free
+2	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	grant_minutes
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	id
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	kind
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	label
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	max
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	max_per_session
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	mid_roll
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	min_gap_secs
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	mode
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	month
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	offline_grant
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	ok
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	on_app_open
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	on_tune
+2	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	paid
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	per_channel
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	placement
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	poster
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	priority
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	refetch_after
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	report_max_batch
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	scope
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	session
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	sha1
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	skip_after
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	skipped
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	spots
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	target
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	tier
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	title
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	url
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	video
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	week
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	weight
+1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	window
 1	core/src/main/java/tv/own/owntv/core/backup/BackupManager.kt	$mapped:${contextKey.substringAfter(':')}
 3	core/src/main/java/tv/own/owntv/core/backup/BackupManager.kt	ctx
 3	core/src/main/java/tv/own/owntv/core/backup/BackupManager.kt	d
@@ -84,15 +141,31 @@
 1	core/src/main/java/tv/own/owntv/core/database/OwnTVDatabase.kt	ALTER TABLE `sources` ADD COLUMN `liveLatencyCustomSecs` INTEGER NOT NULL DEFAULT -1
 1	core/src/main/java/tv/own/owntv/core/database/OwnTVDatabase.kt	ALTER TABLE `sources` ADD COLUMN `liveLatencyMode` TEXT
 1	core/src/main/java/tv/own/owntv/core/database/OwnTVDatabase.kt	ALTER TABLE `sources` ADD COLUMN `preferHls` INTEGER NOT NULL DEFAULT 0
+1	core/src/main/java/tv/own/owntv/core/database/OwnTVDatabase.kt	CREATE INDEX IF NOT EXISTS `index_advert_impressions_profileId_spotId_dayKey` ON `advert_impressions` (`profileId`, `spotId`, `dayKey`)
+1	core/src/main/java/tv/own/owntv/core/database/OwnTVDatabase.kt	CREATE INDEX IF NOT EXISTS `index_advert_impressions_reported` ON `advert_impressions` (`reported`)
+1	core/src/main/java/tv/own/owntv/core/database/OwnTVDatabase.kt	CREATE INDEX IF NOT EXISTS `index_advert_impressions_shownAt` ON `advert_impressions` (`shownAt`)
+1	core/src/main/java/tv/own/owntv/core/database/OwnTVDatabase.kt	CREATE INDEX IF NOT EXISTS `index_advert_impressions_spotId_channelRemoteId_dayKey` ON `advert_impressions` (`spotId`, `channelRemoteId`, `dayKey`)
 1	core/src/main/java/tv/own/owntv/core/database/OwnTVDatabase.kt	CREATE INDEX IF NOT EXISTS `index_custom_category_members_profileId_mediaType_contextKey` ON `custom_category_members` (`profileId`, `mediaType`, `contextKey`)
 1	core/src/main/java/tv/own/owntv/core/database/OwnTVDatabase.kt	CREATE INDEX IF NOT EXISTS `index_custom_category_members_profileId` ON `custom_category_members` (`profileId`)
+1	core/src/main/java/tv/own/owntv/core/database/OwnTVDatabase.kt	CREATE TABLE IF NOT EXISTS `advert_impressions` (
+1	core/src/main/java/tv/own/owntv/core/database/OwnTVDatabase.kt	CREATE TABLE IF NOT EXISTS `advert_ledger` (
 1	core/src/main/java/tv/own/owntv/core/database/OwnTVDatabase.kt	CREATE TABLE IF NOT EXISTS `custom_category_members` (
 1	core/src/main/java/tv/own/owntv/core/database/OwnTVDatabase.kt	CREATE UNIQUE INDEX IF NOT EXISTS `index_custom_category_members_profileId_mediaType_contextKey_itemId` ON `custom_category_members` (`profileId`, `mediaType`, `contextKey`, `itemId`)
+1	core/src/main/java/tv/own/owntv/core/database/OwnTVDatabase.kt	PRIMARY KEY(`profileId`, `dayKey`))
+1	core/src/main/java/tv/own/owntv/core/database/OwnTVDatabase.kt	`campaignId` INTEGER NOT NULL, `channelRemoteId` TEXT NOT NULL, `placement` TEXT NOT NULL,
 1	core/src/main/java/tv/own/owntv/core/database/OwnTVDatabase.kt	`contextKey` TEXT NOT NULL,
+1	core/src/main/java/tv/own/owntv/core/database/OwnTVDatabase.kt	`dayKey` TEXT NOT NULL, `weekKey` TEXT NOT NULL, `monthKey` TEXT NOT NULL,
+1	core/src/main/java/tv/own/owntv/core/database/OwnTVDatabase.kt	`eventUid` TEXT NOT NULL, `profileId` INTEGER NOT NULL, `spotId` INTEGER NOT NULL,
+1	core/src/main/java/tv/own/owntv/core/database/OwnTVDatabase.kt	`grantedMinutes` INTEGER NOT NULL, `consumedMinutes` INTEGER NOT NULL,
 1	core/src/main/java/tv/own/owntv/core/database/OwnTVDatabase.kt	`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
 1	core/src/main/java/tv/own/owntv/core/database/OwnTVDatabase.kt	`itemId` INTEGER NOT NULL,
 1	core/src/main/java/tv/own/owntv/core/database/OwnTVDatabase.kt	`mediaType` TEXT NOT NULL,
+1	core/src/main/java/tv/own/owntv/core/database/OwnTVDatabase.kt	`outcome` TEXT, `reported` INTEGER NOT NULL, PRIMARY KEY(`eventUid`))
 1	core/src/main/java/tv/own/owntv/core/database/OwnTVDatabase.kt	`position` INTEGER NOT NULL,
+1	core/src/main/java/tv/own/owntv/core/database/OwnTVDatabase.kt	`profileId` INTEGER NOT NULL, `dayKey` TEXT NOT NULL,
+1	core/src/main/java/tv/own/owntv/core/database/OwnTVDatabase.kt	`serverBalance` INTEGER NOT NULL, `updatedAt` INTEGER NOT NULL,
+1	core/src/main/java/tv/own/owntv/core/database/OwnTVDatabase.kt	`sessionId` TEXT NOT NULL, `watchedMs` INTEGER NOT NULL, `grantedMinutes` INTEGER NOT NULL,
+1	core/src/main/java/tv/own/owntv/core/database/OwnTVDatabase.kt	`shownAt` INTEGER NOT NULL, `elapsedRealtime` INTEGER NOT NULL,
 1	core/src/main/java/tv/own/owntv/core/database/OwnTVDatabase.kt	audioDelayMs
 1	core/src/main/java/tv/own/owntv/core/database/OwnTVDatabase.kt	hlsSupported
 1	core/src/main/java/tv/own/owntv/core/database/OwnTVDatabase.kt	liveEnginePreference
@@ -101,6 +174,26 @@
 1	core/src/main/java/tv/own/owntv/core/database/OwnTVDatabase.kt	playback_prefs
 1	core/src/main/java/tv/own/owntv/core/database/OwnTVDatabase.kt	preferHls
 5	core/src/main/java/tv/own/owntv/core/database/OwnTVDatabase.kt	sources
+1	core/src/main/java/tv/own/owntv/core/database/dao/AdvertDao.kt	DELETE FROM advert_impressions WHERE shownAt < :before
+1	core/src/main/java/tv/own/owntv/core/database/dao/AdvertDao.kt	DELETE FROM advert_ledger WHERE dayKey < :before
+1	core/src/main/java/tv/own/owntv/core/database/dao/AdvertDao.kt	SELECT * FROM advert_impressions WHERE reported = 0 AND outcome IS NOT NULL ORDER BY shownAt LIMIT :limit
+1	core/src/main/java/tv/own/owntv/core/database/dao/AdvertDao.kt	SELECT * FROM advert_ledger WHERE profileId = :profileId AND dayKey = :dayKey LIMIT 1
+1	core/src/main/java/tv/own/owntv/core/database/dao/AdvertDao.kt	SELECT COUNT(*) FROM advert_impressions WHERE profileId = :profileId AND sessionId = :sessionId
+1	core/src/main/java/tv/own/owntv/core/database/dao/AdvertDao.kt	SELECT COUNT(*) FROM advert_impressions WHERE profileId = :profileId AND spotId = :spotId
+1	core/src/main/java/tv/own/owntv/core/database/dao/AdvertDao.kt	SELECT COUNT(*) FROM advert_impressions WHERE profileId = :profileId AND spotId = :spotId AND channelRemoteId = :channel
+1	core/src/main/java/tv/own/owntv/core/database/dao/AdvertDao.kt	SELECT COUNT(*) FROM advert_impressions WHERE profileId = :profileId AND spotId = :spotId AND channelRemoteId = :channel AND dayKey = :key
+1	core/src/main/java/tv/own/owntv/core/database/dao/AdvertDao.kt	SELECT COUNT(*) FROM advert_impressions WHERE profileId = :profileId AND spotId = :spotId AND channelRemoteId = :channel AND monthKey = :key
+1	core/src/main/java/tv/own/owntv/core/database/dao/AdvertDao.kt	SELECT COUNT(*) FROM advert_impressions WHERE profileId = :profileId AND spotId = :spotId AND channelRemoteId = :channel AND sessionId = :sessionId
+1	core/src/main/java/tv/own/owntv/core/database/dao/AdvertDao.kt	SELECT COUNT(*) FROM advert_impressions WHERE profileId = :profileId AND spotId = :spotId AND channelRemoteId = :channel AND weekKey = :key
+1	core/src/main/java/tv/own/owntv/core/database/dao/AdvertDao.kt	SELECT COUNT(*) FROM advert_impressions WHERE profileId = :profileId AND spotId = :spotId AND dayKey = :key
+1	core/src/main/java/tv/own/owntv/core/database/dao/AdvertDao.kt	SELECT COUNT(*) FROM advert_impressions WHERE profileId = :profileId AND spotId = :spotId AND monthKey = :key
+1	core/src/main/java/tv/own/owntv/core/database/dao/AdvertDao.kt	SELECT COUNT(*) FROM advert_impressions WHERE profileId = :profileId AND spotId = :spotId AND sessionId = :sessionId
+1	core/src/main/java/tv/own/owntv/core/database/dao/AdvertDao.kt	SELECT COUNT(*) FROM advert_impressions WHERE profileId = :profileId AND spotId = :spotId AND weekKey = :key
+1	core/src/main/java/tv/own/owntv/core/database/dao/AdvertDao.kt	SELECT MAX(shownAt) FROM advert_impressions WHERE profileId = :profileId
+1	core/src/main/java/tv/own/owntv/core/database/dao/AdvertDao.kt	SELECT MAX(shownAt) FROM advert_impressions WHERE profileId = :profileId AND spotId = :spotId
+1	core/src/main/java/tv/own/owntv/core/database/dao/AdvertDao.kt	UPDATE advert_impressions SET outcome = 'aborted' WHERE outcome IS NULL AND sessionId != :sessionId
+1	core/src/main/java/tv/own/owntv/core/database/dao/AdvertDao.kt	UPDATE advert_impressions SET outcome = :outcome, watchedMs = :watchedMs WHERE eventUid = :uid
+1	core/src/main/java/tv/own/owntv/core/database/dao/AdvertDao.kt	UPDATE advert_impressions SET reported = 1 WHERE eventUid IN (:uids)
 1	core/src/main/java/tv/own/owntv/core/database/dao/ChannelDao.kt	SELECT COUNT(*) FROM channels WHERE sourceId IN (:sourceIds) AND catchup = 1
 1	core/src/main/java/tv/own/owntv/core/database/dao/CustomCategoryDao.kt	(:type = 'LIVE' AND itemId IN (SELECT id FROM channels WHERE sourceId IN (:sourceIds))) OR
 1	core/src/main/java/tv/own/owntv/core/database/dao/CustomCategoryDao.kt	(:type = 'LIVE' AND itemId NOT IN (SELECT id FROM channels)) OR
@@ -174,6 +267,17 @@
 1	core/src/main/java/tv/own/owntv/core/database/dao/SourceDao.kt	UPDATE sources SET liveEnginePreference = :preference WHERE id = :id
 1	core/src/main/java/tv/own/owntv/core/database/dao/SourceDao.kt	UPDATE sources SET liveLatencyMode = :mode, liveLatencyCustomSecs = :customSecs WHERE id = :id
 1	core/src/main/java/tv/own/owntv/core/database/dao/SourceDao.kt	UPDATE sources SET preferHls = :preferHls WHERE id = :id
+1	core/src/main/java/tv/own/owntv/core/database/entity/AdvertEntities.kt	\0
+1	core/src/main/java/tv/own/owntv/core/database/entity/AdvertEntities.kt	advert_impressions
+1	core/src/main/java/tv/own/owntv/core/database/entity/AdvertEntities.kt	advert_ledger
+1	core/src/main/java/tv/own/owntv/core/database/entity/AdvertEntities.kt	channelRemoteId
+3	core/src/main/java/tv/own/owntv/core/database/entity/AdvertEntities.kt	dayKey
+1	core/src/main/java/tv/own/owntv/core/database/entity/AdvertEntities.kt	eventUid
+1	core/src/main/java/tv/own/owntv/core/database/entity/AdvertEntities.kt	on_tune
+2	core/src/main/java/tv/own/owntv/core/database/entity/AdvertEntities.kt	profileId
+1	core/src/main/java/tv/own/owntv/core/database/entity/AdvertEntities.kt	reported
+1	core/src/main/java/tv/own/owntv/core/database/entity/AdvertEntities.kt	shownAt
+2	core/src/main/java/tv/own/owntv/core/database/entity/AdvertEntities.kt	spotId
 1	core/src/main/java/tv/own/owntv/core/database/entity/ContentEntities.kt	.m3u8
 1	core/src/main/java/tv/own/owntv/core/database/entity/ContentEntities.kt	.ts
 2	core/src/main/java/tv/own/owntv/core/database/entity/UserDataEntities.kt	contextKey

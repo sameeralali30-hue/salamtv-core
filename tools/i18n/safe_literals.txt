@@ -21,6 +21,47 @@
 
 2	empty	core/src/main/java/tv/own/owntv/core/CoreBuildInfo.kt	\0
 1	url	core/src/main/java/tv/own/owntv/core/CoreBuildInfo.kt	https://api.github.com/repos/sameeralali30-hue/salamtv/releases/latest
+1	empty	core/src/main/java/tv/own/owntv/core/adverts/AdvertGate.kt	\0
+1	technical	core/src/main/java/tv/own/owntv/core/adverts/AdvertGate.kt	%d-W%02d
+1	technical	core/src/main/java/tv/own/owntv/core/adverts/AdvertGate.kt	-
+1	log	core/src/main/java/tv/own/owntv/core/adverts/AdvertGate.kt	SalamTVAds
+1	log	core/src/main/java/tv/own/owntv/core/adverts/AdvertGate.kt	advert chosen: #${chosen.id} '${chosen.title}' for channel $channelRemoteId
+1	protocol	core/src/main/java/tv/own/owntv/core/adverts/AdvertGate.kt	categories
+1	protocol	core/src/main/java/tv/own/owntv/core/adverts/AdvertGate.kt	channels
+1	log	core/src/main/java/tv/own/owntv/core/adverts/AdvertGate.kt	no advert: min gap (${(now - last) / 1000}s < ${policy.minGapSecs}s)
+1	log	core/src/main/java/tv/own/owntv/core/adverts/AdvertGate.kt	no advert: session cap ${policy.maxPerSession}
+1	log	core/src/main/java/tv/own/owntv/core/adverts/AdvertGate.kt	no advert: zap
+1	technical	core/src/main/java/tv/own/owntv/core/adverts/AdvertGate.kt	yyyy-MM
+1	technical	core/src/main/java/tv/own/owntv/core/adverts/AdvertGate.kt	yyyy-MM-dd
+1	empty	core/src/main/java/tv/own/owntv/core/adverts/AdvertMediaCache.kt	\0
+1	file-path	core/src/main/java/tv/own/owntv/core/adverts/AdvertMediaCache.kt	${spot.cacheKey}.$ext
+1	technical	core/src/main/java/tv/own/owntv/core/adverts/AdvertMediaCache.kt	%02x
+1	file-path	core/src/main/java/tv/own/owntv/core/adverts/AdvertMediaCache.kt	.part
+1	technical	core/src/main/java/tv/own/owntv/core/adverts/AdvertMediaCache.kt	SHA-1
+1	protocol	core/src/main/java/tv/own/owntv/core/adverts/AdvertMediaCache.kt	SalamTV
+1	log	core/src/main/java/tv/own/owntv/core/adverts/AdvertMediaCache.kt	SalamTVAds
+1	protocol	core/src/main/java/tv/own/owntv/core/adverts/AdvertMediaCache.kt	User-Agent
+1	file-path	core/src/main/java/tv/own/owntv/core/adverts/AdvertMediaCache.kt	adverts
+1	log	core/src/main/java/tv/own/owntv/core/adverts/AdvertMediaCache.kt	cached advert #${spot.id} (${target.length()} bytes)
+1	log	core/src/main/java/tv/own/owntv/core/adverts/AdvertMediaCache.kt	deferring ${spot.cacheKey}: metered network
+1	log	core/src/main/java/tv/own/owntv/core/adverts/AdvertMediaCache.kt	download failed for spot #${spot.id}: ${it.javaClass.simpleName} ${it.message}
+1	assertion	core/src/main/java/tv/own/owntv/core/adverts/AdvertMediaCache.kt	empty download
+1	assertion	core/src/main/java/tv/own/owntv/core/adverts/AdvertMediaCache.kt	http ${resp.code}
+1	protocol	core/src/main/java/tv/own/owntv/core/adverts/AdvertMediaCache.kt	image
+1	file-path	core/src/main/java/tv/own/owntv/core/adverts/AdvertMediaCache.kt	img
+1	file-path	core/src/main/java/tv/own/owntv/core/adverts/AdvertMediaCache.kt	media
+1	file-path	core/src/main/java/tv/own/owntv/core/adverts/AdvertMediaCache.kt	mp4
+1	assertion	core/src/main/java/tv/own/owntv/core/adverts/AdvertMediaCache.kt	not enough space for $total bytes
+1	log	core/src/main/java/tv/own/owntv/core/adverts/AdvertMediaCache.kt	pruning ${f.name}
+1	assertion	core/src/main/java/tv/own/owntv/core/adverts/AdvertMediaCache.kt	rename failed
+1	assertion	core/src/main/java/tv/own/owntv/core/adverts/AdvertMediaCache.kt	sha1 mismatch: $got vs ${spot.sha1}
+1	assertion	core/src/main/java/tv/own/owntv/core/adverts/AdvertMediaCache.kt	size mismatch: $copied vs ${spot.bytes}
+1	assertion	core/src/main/java/tv/own/owntv/core/adverts/AdvertMediaCache.kt	truncated: $copied of $total
+1	log	core/src/main/java/tv/own/owntv/core/adverts/AdvertRepository.kt	SalamTVAds
+1	log	core/src/main/java/tv/own/owntv/core/adverts/AdvertRepository.kt	advert rules unparseable; keeping the last good policy
+1	log	core/src/main/java/tv/own/owntv/core/adverts/AdvertRepository.kt	advert rules updated: rev=${parsed.rev} enabled=${parsed.enabled}
+1	file-path	core/src/main/java/tv/own/owntv/core/adverts/AdvertRepository.kt	adverts
+1	log	core/src/main/java/tv/own/owntv/core/adverts/AdvertRepository.kt	could not persist advert rules: ${it.javaClass.simpleName}
 2	file-path	core/src/main/java/tv/own/owntv/core/backup/BackupContainer.kt	..
 1	technical	core/src/main/java/tv/own/owntv/core/backup/BackupContainer.kt	Corrupt backup header
 2	technical	core/src/main/java/tv/own/owntv/core/backup/BackupContainer.kt	Not an OwnTV backup file
