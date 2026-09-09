@@ -79,9 +79,9 @@ class AdvertGate(
     ): AdvertDecision? {
         if (!compiledIn) return null
 
-        // ① المرور العابر لا يُعلَن عليه.
-        if (reason == TuneReason.ZAP) {
-            Log.d(TAG, "no advert: zap")
+        // ① المرور العابر لا يُعلَن عليه، ولا الاستئناف بعد إعلانٍ للتوّ.
+        if (reason == TuneReason.ZAP || reason == TuneReason.RESUME) {
+            Log.d(TAG, "no advert: $reason")
             return null
         }
 

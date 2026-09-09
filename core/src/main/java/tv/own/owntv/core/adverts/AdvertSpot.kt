@@ -63,8 +63,14 @@ enum class AdvertOutcome(val wire: String) {
     }
 }
 
-/** سبب فتح القناة — البوّابة تعامل التنقّل بـCH± معاملةً مختلفة. */
-enum class TuneReason { DIRECT, ZAP, STARTUP }
+/**
+ * سبب فتح القناة.
+ *
+ * [ZAP] مرورٌ عابر بـCH±، و[RESUME] استئنافٌ بعد إعلانٍ وسطيّ — وكلاهما لا
+ * يُعلَن عليه: الأوّل لأنّه ليس اختياراً، والثاني لأنّ الإعلان عُرض للتوّ،
+ * وإعلانٌ يستدعي إعلاناً حلقةٌ لا تنتهي.
+ */
+enum class TuneReason { DIRECT, ZAP, STARTUP, RESUME }
 
 data class AdvertCap(
     val scope: CapScope,

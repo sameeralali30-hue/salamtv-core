@@ -28,11 +28,13 @@
 1	log	core/src/main/java/tv/own/owntv/core/adverts/AdvertGate.kt	advert chosen: #${chosen.id} '${chosen.title}' for channel $channelRemoteId
 1	protocol	core/src/main/java/tv/own/owntv/core/adverts/AdvertGate.kt	categories
 1	protocol	core/src/main/java/tv/own/owntv/core/adverts/AdvertGate.kt	channels
+1	log	core/src/main/java/tv/own/owntv/core/adverts/AdvertGate.kt	no advert: $reason
 1	log	core/src/main/java/tv/own/owntv/core/adverts/AdvertGate.kt	no advert: min gap (${(now - last) / 1000}s < ${policy.minGapSecs}s)
 1	log	core/src/main/java/tv/own/owntv/core/adverts/AdvertGate.kt	no advert: session cap ${policy.maxPerSession}
-1	log	core/src/main/java/tv/own/owntv/core/adverts/AdvertGate.kt	no advert: zap
 1	technical	core/src/main/java/tv/own/owntv/core/adverts/AdvertGate.kt	yyyy-MM
 1	technical	core/src/main/java/tv/own/owntv/core/adverts/AdvertGate.kt	yyyy-MM-dd
+1	log	core/src/main/java/tv/own/owntv/core/adverts/AdvertLedger.kt	SalamTVAds
+1	log	core/src/main/java/tv/own/owntv/core/adverts/AdvertLedger.kt	granted $minutes minute(s)
 1	empty	core/src/main/java/tv/own/owntv/core/adverts/AdvertMediaCache.kt	\0
 1	file-path	core/src/main/java/tv/own/owntv/core/adverts/AdvertMediaCache.kt	${spot.cacheKey}.$ext
 1	technical	core/src/main/java/tv/own/owntv/core/adverts/AdvertMediaCache.kt	%02x
