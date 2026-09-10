@@ -106,13 +106,29 @@ class AdvertGate(
             return null
         }
 
+        /* ═══ توفّر الوسائط شرطُ أهليّة، لا فحصٌ بعد القرعة ═══
+
+           كان الترتيب: اقترع من المؤهَّلين، ثمّ اسأل هل ملفّ الفائز منزَّل،
+           فإن لم يكن **ألغِ الفتحة كلّها**.
+
+           ⚠ وذلك يعني أنّ إعلاناً واحداً معطوب الوسائط يُسكِت إعلاناً سليماً
+             بجانبه: بإعلانين متساويين، نصفُ الفتحات تقع على المعطوب فلا يُعرض
+             شيء — بلا رسالة، وبلا صفٍّ في التقارير، فيبدو النظام كأنّه يعمل
+             نصف الوقت بلا سبب. رآه المشغّل قبل أن نراه نحن.
+
+           ومع عشرة إعلانات يصير تسعون بالمئة من الفتحات ضائعة إن تعطّل
+           تنزيلٌ واحد. فالشرط ينتقل إلى الترشيح: من لا ملفّ له ليس مرشّحاً
+           أصلاً، فتقع القرعة بين الصالحين وحدهم.
+
+           و[wouldFire] كانت تفعل هذا منذ البداية — الشذوذ كان هنا وحده. */
         val eligible = policy.spots.filter {
-            eligible(it, profileId, channelRemoteId, categoryRemoteId, placement, now)
+            eligible(it, profileId, channelRemoteId, categoryRemoteId, placement, now) &&
+                media.localPath(it) != null
         }
         if (eligible.isEmpty()) return null
 
         val chosen = pick(eligible) ?: return null
-        val path = media.localPath(chosen) ?: return null   // ② تحقّقٌ أخير
+        val path = media.localPath(chosen) ?: return null   // ② الملفّ قد يُحذف بين الترشيح والاختيار
 
         Log.i(TAG, "advert chosen: #${chosen.id} '${chosen.title}' for channel $channelRemoteId")
         return AdvertDecision(

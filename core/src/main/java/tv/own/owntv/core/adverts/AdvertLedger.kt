@@ -62,7 +62,18 @@ class AdvertLedger(
     val balance: StateFlow<Int> = _balance.asStateFlow()
 
     /** هل هذا المشترك مجّانيّ أصلاً؟ المدفوع لا يمرّ بشيء من هذا. */
-    val applies: Boolean get() = repository.policy.value.isFree
+    /* ═══ الدفتر يتوقّف مع المفتاح العامّ ═══
+
+       كان الشرط `isFree` وحده، والنتيجة عكسُ ما وُضع مفتاحُ القتل لأجله:
+       تُطفئ النظام، فيستمرّ عدّاد المجّانيّ في الاستهلاك، وعند الصفر يُطلب
+       إعلانٌ وسطيّ فترفضه البوّابة (النظام مطفأ) — فتتوقّف المشاهدة عند
+       «نفد وقتك» **بلا مخرج**، لأنّ الإعلان الذي يشتري الوقت معطَّل.
+
+       ⚠ أي أنّ مفتاح الطوارئ كان يحبس المستخدم بدل أن يحرّره. والقاعدة
+         المعلنة في الخطة عكسه: «عطلٌ عندنا لا يُعاقَب به المستخدم».
+
+       فمع الإطفاء لا دفتر ولا عدّاد ولا سقف: وصولٌ غير محدود حتى يعود. */
+    val applies: Boolean get() = repository.policy.value.let { it.isFree && it.enabled }
 
     /** يقرأ الرصيد ويُحدّث [balance]. */
     suspend fun refresh(profileId: Long): Int = gate.withLock { compute(profileId) }
@@ -119,7 +130,8 @@ class AdvertLedger(
 
     private suspend fun compute(profileId: Long): Int {
         val policy = repository.policy.value
-        if (!policy.isFree) {
+        // النظام مطفأ = لا أحد «مجّانيّ» محاسَبيّاً — انظر التعليق عند [applies].
+        if (!policy.isFree || !policy.enabled) {
             _balance.value = UNLIMITED
             return UNLIMITED
         }
