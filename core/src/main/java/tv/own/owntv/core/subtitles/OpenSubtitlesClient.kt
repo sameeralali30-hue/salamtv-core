@@ -192,7 +192,7 @@ class OpenSubtitlesClient(
          * third party's Worker and a third party's consumer key — their download quota spent on
          * our subscribers, and their outage becoming ours.
          */
-        private const val WORKER_BASE = "https://salamtv1.mohamedalalichatbot.xyz/iptv/opensub"
+        private const val WORKER_BASE = "https://salamtv4.mohamedalalichatbot.xyz/iptv/opensub"
 
         /** Standard upstream; login's base_url may switch a VIP account to vip-api (plan §5.4). */
         const val DEFAULT_HOST = "api.opensubtitles.com"

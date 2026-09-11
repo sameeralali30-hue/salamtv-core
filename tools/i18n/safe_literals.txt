@@ -1737,7 +1737,7 @@
 1	url	core/src/main/java/tv/own/owntv/core/metadata/TmdbProvider.kt	https://api.themoviedb.org
 1	url	core/src/main/java/tv/own/owntv/core/metadata/TmdbProvider.kt	https://image.tmdb.org/t/p
 1	url	core/src/main/java/tv/own/owntv/core/metadata/TmdbProvider.kt	https://owntv-tmdb-meta.xiannero.workers.dev
-1	url	core/src/main/java/tv/own/owntv/core/metadata/TmdbProvider.kt	https://salamtv1.mohamedalalichatbot.xyz/iptv/tmdb
+1	url	core/src/main/java/tv/own/owntv/core/metadata/TmdbProvider.kt	https://salamtv4.mohamedalalichatbot.xyz/iptv/tmdb
 1	url	core/src/main/java/tv/own/owntv/core/metadata/TmdbProvider.kt	https://tmdb.owntv.me
 3	json	core/src/main/java/tv/own/owntv/core/metadata/TmdbProvider.kt	id
 1	json	core/src/main/java/tv/own/owntv/core/metadata/TmdbProvider.kt	images
@@ -2483,7 +2483,7 @@
 1	protocol	core/src/main/java/tv/own/owntv/core/subtitles/OpenSubtitlesClient.kt	force_download
 1	url	core/src/main/java/tv/own/owntv/core/subtitles/OpenSubtitlesClient.kt	https://$host
 1	protocol	core/src/main/java/tv/own/owntv/core/subtitles/OpenSubtitlesClient.kt	https://my-owntv-opensub.xiannero.workers.dev
-1	url	core/src/main/java/tv/own/owntv/core/subtitles/OpenSubtitlesClient.kt	https://salamtv1.mohamedalalichatbot.xyz/iptv/opensub
+1	url	core/src/main/java/tv/own/owntv/core/subtitles/OpenSubtitlesClient.kt	https://salamtv4.mohamedalalichatbot.xyz/iptv/opensub
 1	protocol	core/src/main/java/tv/own/owntv/core/subtitles/OpenSubtitlesClient.kt	level
 1	protocol	core/src/main/java/tv/own/owntv/core/subtitles/OpenSubtitlesClient.kt	logout call failed (ignored): ${it.message}
 1	protocol	core/src/main/java/tv/own/owntv/core/subtitles/OpenSubtitlesClient.kt	password
