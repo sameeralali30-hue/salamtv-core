@@ -63,6 +63,9 @@ class AdvertGate(
     /** يتبدّل مع كلّ تشغيلٍ للعمليّة — نافذة `session`. */
     val sessionId: String = UUID.randomUUID().toString()
 
+    /** السياسة الحاليّة كما تراها البوّابة — لمن يقرّر «متى» لا «ماذا». */
+    val policy: kotlinx.coroutines.flow.StateFlow<AdvertPolicy> get() = repository.policy
+
     /**
      * ⑤ القرار، بلا أثرٍ جانبيّ.
      *
