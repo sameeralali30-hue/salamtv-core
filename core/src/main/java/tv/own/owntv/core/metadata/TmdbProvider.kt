@@ -405,7 +405,7 @@ class TmdbProvider(
          * The user-facing tiers are untouched: entering a personal TMDB key still goes direct
          * (Tier 2), and a custom server URL still overrides everything (Tier 3).
          */
-        const val SALAMTV_TMDB_BASE = "https://salamtv4.mohamedalalichatbot.xyz/iptv/tmdb"
+        const val SALAMTV_TMDB_BASE = "https://app.mohamedalalichatbot.xyz/iptv/tmdb"
 
         /** Default base for this build. */
         fun defaultWorkerBase(): String = SALAMTV_TMDB_BASE
