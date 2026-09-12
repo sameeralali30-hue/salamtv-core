@@ -360,6 +360,7 @@
     <string name="settings_accent_violet">بنفسجي</string>
     <string name="settings_accent_green">أخضر</string>
     <string name="settings_accent_amber">كهرماني</string>
+    <string name="settings_accent_crimson">قرمزيّ</string>
     <string name="settings_group_profile">الملف الشخصي</string>
     <string name="settings_group_sources">المصادر ودليل البرامج</string>
     <string name="settings_group_layout">التخطيط</string>

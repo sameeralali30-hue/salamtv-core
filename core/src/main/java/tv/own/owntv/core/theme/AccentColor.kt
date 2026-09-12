@@ -9,4 +9,4 @@ package tv.own.owntv.core.theme
  * `primaryContainer` roles each preset seeds, and its display label, are rendering concerns and live
  * with the theme in the app module.
  */
-enum class AccentColor { TEAL, BLUE, VIOLET, GREEN, AMBER }
+enum class AccentColor { CRIMSON, TEAL, BLUE, VIOLET, GREEN, AMBER }

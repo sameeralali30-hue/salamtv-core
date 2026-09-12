@@ -772,6 +772,7 @@
     <string name="settings_accent_green">Green</string>
     <!-- Translators: Accent color preset name. -->
     <string name="settings_accent_amber">Amber</string>
+    <string name="settings_accent_crimson">Crimson</string>
     <!-- Translators: Settings search-result breadcrumb category for Profile. -->
     <string name="settings_group_profile">Profile</string>
     <!-- Translators: Settings navigation group label, and search-result breadcrumb category, for the group holding playlists, EPG sources, the EPG time offset and catch-up. -->

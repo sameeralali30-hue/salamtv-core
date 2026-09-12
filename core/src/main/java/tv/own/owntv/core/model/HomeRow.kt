@@ -32,8 +32,13 @@ enum class HeroKind {
 
 @Immutable
 data class HomeConfig(
-    val order: List<HomeRow> = HomeRow.entries.toList(),
-    val hidden: Set<HomeRow> = setOf(HomeRow.RECENT_CHANNELS),
+    /* ترتيب SalamTV: ما كان يشاهده أوّلاً (تابع المشاهدة، آخر القنوات) ثمّ البقيّة.
+       من عدّل الترتيب من الإعدادات يبقى على تعديله — هذا الافتراضيّ فقط. */
+    val order: List<HomeRow> = listOf(
+        HomeRow.TRENDING, HomeRow.HERO, HomeRow.CONTINUE_MOVIES, HomeRow.CONTINUE_SERIES,
+        HomeRow.RECENT_CHANNELS, HomeRow.FAVORITE_CHANNELS,
+    ),
+    val hidden: Set<HomeRow> = emptySet(),
     val heroIncludeLive: Boolean = true,
     val heroIncludeMovies: Boolean = true,
     val heroIncludeSeries: Boolean = true,

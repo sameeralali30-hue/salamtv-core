@@ -18,25 +18,25 @@ object OwnTVPalette {
     const val AccentCyan = 0xFF52DBC8L
 
     // ---------------- DARK (M3 dark over near-black #040e0b) ----------------
-    const val DarkBackground = 0xFF040E0BL
-    const val DarkSurface = 0xFF0E1513L
-    const val DarkSurfaceContainerLowest = 0xFF090F0EL
-    const val DarkSurfaceContainerLow = 0xFF161D1BL
-    const val DarkSurfaceContainer = 0xFF1B211FL
-    const val DarkSurfaceContainerHigh = 0xFF252B29L
-    const val DarkSurfaceContainerHighest = 0xFF303634L
-    const val DarkOnSurface = 0xFFDEE4E1L
-    const val DarkOnSurfaceVariant = 0xFFBFC9C4L
+    const val DarkBackground = 0xFF08080AL
+    const val DarkSurface = 0xFF0E0E11L
+    const val DarkSurfaceContainerLowest = 0xFF050507L
+    const val DarkSurfaceContainerLow = 0xFF141417L
+    const val DarkSurfaceContainer = 0xFF1A191DL
+    const val DarkSurfaceContainerHigh = 0xFF232226L
+    const val DarkSurfaceContainerHighest = 0xFF2D2C31L
+    const val DarkOnSurface = 0xFFF2EFF1L
+    const val DarkOnSurfaceVariant = 0xFFB9B3B8L
     const val DarkOutline = 0xFF89938FL
-    const val DarkOutlineVariant = 0xFF3F4945L
-    const val DarkSecondary = 0xFFB1CCC3L
-    const val DarkOnSecondary = 0xFF1C352EL
-    const val DarkSecondaryContainer = 0xFF334B44L
-    const val DarkOnSecondaryContainer = 0xFFCDE8DFL
-    const val DarkTertiary = 0xFFA9CBE4L
-    const val DarkOnTertiary = 0xFF0B3445L
-    const val DarkTertiaryContainer = 0xFF294B5DL
-    const val DarkOnTertiaryContainer = 0xFFC5E7FFL
+    const val DarkOutlineVariant = 0xFF2A292EL
+    const val DarkSecondary = 0xFFE6B8BEL
+    const val DarkOnSecondary = 0xFF44252AL
+    const val DarkSecondaryContainer = 0xFF5D3A40L
+    const val DarkOnSecondaryContainer = 0xFFFFD9DDL
+    const val DarkTertiary = 0xFFF0C060L
+    const val DarkOnTertiary = 0xFF3A2A00L
+    const val DarkTertiaryContainer = 0xFF5A4410L
+    const val DarkOnTertiaryContainer = 0xFFFFE6B0L
     const val DarkError = 0xFFFFB4ABL
 
     // ---------------- LIGHT (M3 light) ----------------
@@ -84,8 +84,9 @@ data class AccentRoleValues(
 private class AccentPalette(val dark: AccentRoleValues, val light: AccentRoleValues)
 
 private val TealPalette = AccentPalette(
-    dark = AccentRoleValues(0xFF52DBC8L, 0xFF003730L, 0xFF004F46L, 0xFF6FF8E4L),
-    light = AccentRoleValues(0xFF006B5EL, 0xFFFFFFFFL, 0xFF6FF8E4L, 0xFF00201BL),
+    // هويّة SalamTV: الفيروزيّ #4EE0B5 نفسه في صفحة الهبوط والتطبيق
+    dark = AccentRoleValues(0xFF4EE0B5L, 0xFF06110DL, 0xFF0F4A3CL, 0xFFA6F5DFL),
+    light = AccentRoleValues(0xFF00775FL, 0xFFFFFFFFL, 0xFF9FF3DCL, 0xFF00201BL),
 )
 
 private val BluePalette = AccentPalette(
@@ -103,6 +104,13 @@ private val GreenPalette = AccentPalette(
     light = AccentRoleValues(0xFF1B6B3FL, 0xFFFFFFFFL, 0xFFA6F2C0L, 0xFF00210FL),
 )
 
+/* هويّة SalamTV الافتراضيّة: أحمر مائل للورديّ على أسود — الأحمر الفاتح للعناصر
+   الحيّة، والحاويات بنبيذيّ داكن يمتزج مع الأسود بدل أن يصرخ فوقه. */
+private val CrimsonPalette = AccentPalette(
+    dark = AccentRoleValues(0xFFFF6B7AL, 0xFF3D000BL, 0xFF5C1522L, 0xFFFFD9DDL),
+    light = AccentRoleValues(0xFFB3213AL, 0xFFFFFFFFL, 0xFFFFD9DDL, 0xFF40000EL),
+)
+
 private val AmberPalette = AccentPalette(
     dark = AccentRoleValues(0xFFFFB95CL, 0xFF452B00L, 0xFF624000L, 0xFFFFDDB3L),
     light = AccentRoleValues(0xFF8A5100L, 0xFFFFFFFFL, 0xFFFFDDB3L, 0xFF2C1600L),
@@ -111,6 +119,7 @@ private val AmberPalette = AccentPalette(
 /** The preset's four primary-role values for the given theme. */
 fun AccentColor.roles(isDark: Boolean): AccentRoleValues {
     val palette = when (this) {
+        AccentColor.CRIMSON -> CrimsonPalette
         AccentColor.TEAL -> TealPalette
         AccentColor.BLUE -> BluePalette
         AccentColor.VIOLET -> VioletPalette
