@@ -8,7 +8,7 @@
 1	core/src/main/java/tv/own/owntv/core/adverts/AdvertRepository.kt	restored ${it.spots.size} advert(s) from disk, rev=${it.rev}
 1	core/src/main/java/tv/own/owntv/core/adverts/AdvertRepository.kt	rules.json
 1	core/src/main/java/tv/own/owntv/core/adverts/AdvertRepository.kt	tier=${parsed.tier} spots=${parsed.spots.size}
-1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	\0
+2	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	\0
 1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	aborted
 1	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	adv_rev
 3	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	all

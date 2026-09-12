@@ -133,6 +133,8 @@ data class AdvertPolicy(
     val minGapSecs: Int,
     /** المدفوع: إعلانٌ وسطيّ كلّ N دقيقةَ مشاهدةٍ فعليّة؛ ٠ = لا شيء. */
     val paidMidRollMinutes: Int,
+    /** جهة التفعيل كما كتبها المشغّل (رقم واتساب مثلاً) — تُعرض حرفيّاً؛ فارغة = لا سطر. */
+    val contact: String,
     val maxPerSession: Int,
     val refetchAfterSecs: Int,
     val reportMaxBatch: Int,
@@ -150,7 +152,7 @@ data class AdvertPolicy(
         val EMPTY = AdvertPolicy(
             rev = "", enabled = false, tier = "paid",
             grantMinutes = 30, offlineGrantMinutes = 60, dailyMinutesCap = 0,
-            minGapSecs = 900, paidMidRollMinutes = 0, maxPerSession = 0, refetchAfterSecs = 21_600,
+            minGapSecs = 900, paidMidRollMinutes = 0, contact = "", maxPerSession = 0, refetchAfterSecs = 21_600,
             reportMaxBatch = 50, fetchedAtMs = 0L, spots = emptyList(),
         )
 
@@ -180,6 +182,7 @@ data class AdvertPolicy(
                 dailyMinutesCap = json.optInt("daily_minutes_cap", 0),
                 minGapSecs = json.optInt("min_gap_secs", 900),
                 paidMidRollMinutes = json.optInt("paid_midroll_min", 0).coerceIn(0, 1440),
+                contact = json.optString("contact").trim().take(60),
                 maxPerSession = json.optInt("max_per_session", 0),
                 refetchAfterSecs = json.optInt("refetch_after", 21_600),
                 reportMaxBatch = json.optInt("report_max_batch", 50).coerceIn(1, 200),

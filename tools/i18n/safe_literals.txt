@@ -64,6 +64,7 @@
 1	log	core/src/main/java/tv/own/owntv/core/adverts/AdvertRepository.kt	advert rules updated: rev=${parsed.rev} enabled=${parsed.enabled}
 1	file-path	core/src/main/java/tv/own/owntv/core/adverts/AdvertRepository.kt	adverts
 1	log	core/src/main/java/tv/own/owntv/core/adverts/AdvertRepository.kt	could not persist advert rules: ${it.javaClass.simpleName}
+1	json	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	contact
 1	json	core/src/main/java/tv/own/owntv/core/adverts/AdvertSpot.kt	paid_midroll_min
 2	file-path	core/src/main/java/tv/own/owntv/core/backup/BackupContainer.kt	..
 1	technical	core/src/main/java/tv/own/owntv/core/backup/BackupContainer.kt	Corrupt backup header
