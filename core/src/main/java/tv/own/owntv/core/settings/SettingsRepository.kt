@@ -612,7 +612,8 @@ class SettingsRepository(private val context: Context, private val localeStore: 
     // --- Weather chip (top bar): show/hide + manual location override for VPN users ---
 
     /** Show the weather chip in the top bar (default ON). */
-    val weatherEnabled: Flow<Boolean> = prefsFlow { it[Keys.WEATHER_ENABLED] ?: true }
+    // مطفأ افتراضيّاً في SalamTV: يسأل ipapi.co عن موقع الجهاز (طرف ثالث يرى IP المشترك). من يريده يفعّله.
+    val weatherEnabled: Flow<Boolean> = prefsFlow { it[Keys.WEATHER_ENABLED] ?: false }
 
     suspend fun setWeatherEnabled(enabled: Boolean) {
         context.dataStore.edit { it[Keys.WEATHER_ENABLED] = enabled }
