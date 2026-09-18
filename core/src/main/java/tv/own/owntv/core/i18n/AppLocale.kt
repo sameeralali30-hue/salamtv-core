@@ -58,7 +58,13 @@ object AppLocale {
     fun wrap(base: Context, tag: String): Context {
         val locales = effectiveLocaleList(tag)
         if (locales.isEmpty) return base
-        val config = Configuration(base.resources.configuration)
+        // An *override* configuration: every field left undefined keeps following the system.
+        // Copying the base configuration here pinned orientation/screen size to their values at
+        // attach time, so an Activity that handles configChanges (the phone form) never saw a
+        // rotation in LocalConfiguration. fontScale defaults to 1, which counts as "set" and would
+        // cancel the user's font size — clear it too.
+        val config = Configuration()
+        config.fontScale = 0f
         config.setLocales(locales)
         return base.createConfigurationContext(config)
     }

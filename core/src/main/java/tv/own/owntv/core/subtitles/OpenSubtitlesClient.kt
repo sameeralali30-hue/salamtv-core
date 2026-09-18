@@ -198,7 +198,7 @@ class OpenSubtitlesClient(
         const val DEFAULT_HOST = "api.opensubtitles.com"
 
         /** OpenSubtitles requires an identifying UA; must match what the Worker sends upstream. */
-        private const val USER_AGENT = "OwnTV"
+        private const val USER_AGENT = "SalamTV"
 
         private val JSON_MEDIA_TYPE = "application/json".toMediaType()
     }

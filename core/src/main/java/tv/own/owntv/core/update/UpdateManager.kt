@@ -190,7 +190,7 @@ class UpdateManager(
             attempt++
             try {
                 val have = if (partial.exists()) partial.length() else 0L
-                val request = Request.Builder().url(url).header("User-Agent", "OwnTV")
+                val request = Request.Builder().url(url).header("User-Agent", "SalamTV")
                     .apply { if (have > 0) header("Range", "bytes=$have-") }
                     .build()
                 client.newCall(request).execute().use { resp ->

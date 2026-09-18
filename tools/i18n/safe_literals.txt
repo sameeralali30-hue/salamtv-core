@@ -2479,8 +2479,8 @@
 1	protocol	core/src/main/java/tv/own/owntv/core/subtitles/OpenSubtitlesClient.kt	OpenSubtitles
 1	protocol	core/src/main/java/tv/own/owntv/core/subtitles/OpenSubtitlesClient.kt	OpenSubtitles HTTP ${resp.code}
 1	protocol	core/src/main/java/tv/own/owntv/core/subtitles/OpenSubtitlesClient.kt	OpenSubtitles returned malformed JSON for $pathAndQuery
-1	protocol	core/src/main/java/tv/own/owntv/core/subtitles/OpenSubtitlesClient.kt	OwnTV
 2	protocol	core/src/main/java/tv/own/owntv/core/subtitles/OpenSubtitlesClient.kt	POST
+1	technical	core/src/main/java/tv/own/owntv/core/subtitles/OpenSubtitlesClient.kt	SalamTV
 1	protocol	core/src/main/java/tv/own/owntv/core/subtitles/OpenSubtitlesClient.kt	UTF-8
 1	protocol	core/src/main/java/tv/own/owntv/core/subtitles/OpenSubtitlesClient.kt	User-Agent
 1	protocol	core/src/main/java/tv/own/owntv/core/subtitles/OpenSubtitlesClient.kt	X-OS-Host
@@ -2937,9 +2937,8 @@
 1	protocol	core/src/main/java/tv/own/owntv/core/update/DeviceForm.kt	tv
 1	protocol	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	.apk
 1	technical	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	Accept
-1	technical	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	OwnTV
 1	protocol	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	Range
-1	protocol	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	SalamTV
+2	technical	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	SalamTV
 1	log	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	UpdateManager
 2	technical	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	User-Agent
 1	mime	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	application/json
