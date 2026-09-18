@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.Request
 import org.json.JSONObject
 import tv.own.owntv.core.CoreBuildInfo
@@ -97,8 +98,12 @@ class UpdateManager(
         _state.value = State.Checking
         scope.launch {
             runCatching {
+                // [SALAMTV] Two published files per release; the panel picks by device form.
+                val url = RELEASE_URL.toHttpUrl().newBuilder()
+                    .setQueryParameter("form", DeviceForm.detect(context))
+                    .build()
                 val request = Request.Builder()
-                    .url(RELEASE_URL)
+                    .url(url)
                     .header("Accept", "application/json")
                     .header("User-Agent", "SalamTV")
                     .build()
@@ -111,8 +116,10 @@ class UpdateManager(
                         ?: throw InvalidReleaseResponseException()
                     val notes = o.optString("body").take(16_000)
                     val assets = o.optJSONArray("assets") ?: throw InvalidReleaseResponseException()
-                    // One universal APK per release — it carries every ABI, so there is nothing
-                    // to match against this device. Any .apk in the release is the right one.
+                    // The panel already answered for this device's form (see the `form` query above),
+                    // so the first .apk it lists is the right one. GitHub's raw feed (forks, dev
+                    // builds) lists every asset — prefer the one named for this form, else any.
+                    val form = DeviceForm.detect(context)
                     val apkUrl = (0 until assets.length())
                         .asSequence()
                         .mapNotNull { assets.optJSONObject(it) }
@@ -121,7 +128,8 @@ class UpdateManager(
                             val url = asset.optString("browser_download_url")
                             if (name.endsWith(".apk", ignoreCase = true) && url.isNotBlank()) url else null
                         }
-                        .firstOrNull()
+                        .toList()
+                        .let { urls -> urls.firstOrNull { it.contains("-$form-", ignoreCase = true) } ?: urls.firstOrNull() }
                         ?: throw NoCompatibleApkException()
                     val info = UpdateInfo(version, notes, apkUrl)
                     if (isNewer(version, currentVersion)) _state.value = State.Available(info)
@@ -142,39 +150,18 @@ class UpdateManager(
             runCatching {
                 val dir = File(context.filesDir, "updates").apply { mkdirs() }
                 val out = File(dir, "owntv-update.apk")
-                out.delete() // never build on top of a previous half-download
-                val request = Request.Builder().url(info.apkUrl).header("User-Agent", "OwnTV").build()
+                val partial = File(dir, "owntv-update.part")
                 try {
-                    client.newCall(request).execute().use { resp ->
-                        if (!resp.isSuccessful) throw DownloadHttpException(resp.code)
-                        val body = resp.body
-                        val total = body.contentLength()
-                        // The APK is written once here and copied again into the install session, so
-                        // the download needs room for two of it. Checking up front turns a silent short
-                        // write — which reaches the installer as "App not installed" — into a real message.
-                        if (total > 0 && dir.usableSpace < total * 2) throw NotEnoughSpaceException(total * 2)
-                        var copied = 0L
-                        body.byteStream().use { input ->
-                            out.outputStream().use { output ->
-                                val buf = ByteArray(64 * 1024)
-                                while (true) {
-                                    val n = input.read(buf)
-                                    if (n < 0) break
-                                    output.write(buf, 0, n)
-                                    copied += n
-                                    if (total > 0) _state.value = State.Downloading((copied * 100 / total).toInt())
-                                }
-                            }
-                        }
-                        if (copied == 0L) throw EmptyDownloadException()
-                        if (total > 0 && copied != total) {
-                            throw DamagedDownloadException("truncated: got $copied of $total bytes")
-                        }
-                    }
+                    downloadResumable(info.apkUrl, partial)
+                    out.delete()
+                    if (!partial.renameTo(out)) throw DamagedDownloadException("rename failed")
                     verifyApk(out)
                     install(out)
                 } catch (e: Throwable) {
                     out.delete() // a bad file must not linger and be retried as-is
+                    if (e is DamagedDownloadException || e is InstallException) {
+                        partial.delete() // bytes proven wrong — a later resume must start clean
+                    }
                     throw e
                 }
                 _state.value = State.Available(info) // dialog stays sane if the user cancels install
@@ -184,6 +171,70 @@ class UpdateManager(
                 _state.value = State.Failed(failure, retryInfo = info)
             }
         }
+    }
+
+    /**
+     * ═══ لماذا التنزيل يستأنف ولا يبدأ من الصفر ═══
+     * الملفّ عشرات الميغابايتات والشبكة عند كثير من المشتركين 100–200 KB/s وتتقطّع. تنزيلٌ
+     * يُحذف عند أوّل انقطاع لا ينتهي أبداً على هذه الشبكات — يبدو للمشترك «التحديث لا يعمل».
+     * هنا الجزء المنزَّل يبقى في `.part`؛ كلّ محاولة تطلب ما بعده (`Range`)، وتُعاد المحاولة
+     * حتّى [MAX_ATTEMPTS] مرّة قبل الاستسلام. خادمنا وGitHub يجيبان 206؛ خادمٌ يعيد 200 يعني
+     * أنّه لا يدعم الاستئناف فنبدأ من الصفر معه. تغيّر الحجم الكلّيّ بين محاولتين = ملفّ آخر
+     * على الخادم ⇒ نبدأ من الصفر أيضاً.
+     */
+    private fun downloadResumable(url: String, partial: File) {
+        var attempt = 0
+        var lastError: Throwable? = null
+        var knownTotal = -1L
+        while (attempt < MAX_ATTEMPTS) {
+            attempt++
+            try {
+                val have = if (partial.exists()) partial.length() else 0L
+                val request = Request.Builder().url(url).header("User-Agent", "OwnTV")
+                    .apply { if (have > 0) header("Range", "bytes=$have-") }
+                    .build()
+                client.newCall(request).execute().use { resp ->
+                    if (!resp.isSuccessful) throw DownloadHttpException(resp.code)
+                    val resumed = resp.code == 206 && have > 0
+                    val body = resp.body
+                    val total = if (resumed) have + body.contentLength() else body.contentLength()
+                    if (knownTotal > 0 && total > 0 && total != knownTotal) {
+                        partial.delete(); knownTotal = -1
+                        throw java.io.IOException("file changed on server") // next attempt restarts clean
+                    }
+                    knownTotal = total
+                    // The APK is written once here and copied again into the install session, so
+                    // the download needs room for two of it. Checking up front turns a silent short
+                    // write — which reaches the installer as "App not installed" — into a real message.
+                    if (total > 0 && partial.parentFile!!.usableSpace < total * 2) throw NotEnoughSpaceException(total * 2)
+                    var copied = if (resumed) have else 0L
+                    body.byteStream().use { input ->
+                        java.io.FileOutputStream(partial, resumed).use { output ->
+                            val buf = ByteArray(64 * 1024)
+                            while (true) {
+                                val n = input.read(buf)
+                                if (n < 0) break
+                                output.write(buf, 0, n)
+                                copied += n
+                                if (total > 0) _state.value = State.Downloading((copied * 100 / total).toInt())
+                            }
+                        }
+                    }
+                    if (copied == 0L) throw EmptyDownloadException()
+                    if (total > 0 && copied != total) {
+                        throw java.io.IOException("truncated: got $copied of $total bytes") // resumable
+                    }
+                }
+                return
+            } catch (e: java.io.IOException) {
+                // ردّ HTTP سيّئ أو قرص ممتلئ أو جسم فارغ لا تصلحه المحاولة؛ الشبكة المتقطّعة وحدها تُعاد
+                if (e is DownloadHttpException || e is NotEnoughSpaceException || e is EmptyDownloadException) throw e
+                lastError = e
+                Log.w(TAG, "download attempt $attempt failed, ${partial.length()} bytes kept: ${e.message}")
+                Thread.sleep(RETRY_DELAY_MS * attempt)
+            }
+        }
+        throw DamagedDownloadException("gave up after $MAX_ATTEMPTS attempts: ${lastError?.message}")
     }
 
     /**
@@ -298,6 +349,8 @@ class UpdateManager(
 
     companion object {
         private const val TAG = "UpdateManager"
+        private const val MAX_ATTEMPTS = 8          // شبكة متقطّعة: ثماني استئنافات قبل الاستسلام
+        private const val RETRY_DELAY_MS = 2_000L   // × رقم المحاولة
         private const val SESSION_ENTRY = "owntv-update"
         private const val INSTALL_STATUS_ACTION = "tv.own.owntv.UPDATE_INSTALL_STATUS"
         const val REPO = "sameeralali30-hue/salamtv"

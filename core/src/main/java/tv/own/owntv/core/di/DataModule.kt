@@ -86,7 +86,7 @@ val dataModule = module {
     // store, sourceDao, epgRepository
     single { tv.own.owntv.core.epg.EpgMigration(get(), get(), get()) }
     single { M3uParser() }
-    single { XtreamClient(get()) }
+    single { XtreamClient(get(), get()) }
     // Stalker portal (plan Phase A/B): protocol client on the shared OkHttpClient + in-memory sessions.
     single { tv.own.owntv.core.stalker.StalkerClient(get()) }
     single { tv.own.owntv.core.stalker.StalkerAuthManager(get()) }

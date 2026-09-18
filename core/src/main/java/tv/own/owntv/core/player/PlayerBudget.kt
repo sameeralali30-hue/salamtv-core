@@ -36,14 +36,16 @@ data class PlayerBudget(
                     demuxerMaxBytes = "48MiB", demuxerBackBytes = "16MiB",
                     readaheadSecs = "10", cacheSecs = "30", lowSpec = true,
                 )
+                // [SALAMTV] قراءة أمامية أعمق للأفلام والحلقات: السقف بالبايت هو الحاكم (128MiB ≈ 4 دقائق
+                // على 4 ميغابت) والثواني تسمح للكاش أن يبلغه بدل أن يقف عند نصف دقيقة. تُمحى مع إغلاق الملفّ.
                 totalGb < 6.0 -> PlayerBudget(
                     demuxerMaxBytes = "128MiB", demuxerBackBytes = "32MiB",
-                    readaheadSecs = "30", cacheSecs = "60", lowSpec = false,
+                    readaheadSecs = "120", cacheSecs = "180", lowSpec = false,
                 )
                 else -> PlayerBudget(
                     // RAM-rich devices (emulators, high-end boxes) keep the deep 4K/8K read-ahead.
                     demuxerMaxBytes = "256MiB", demuxerBackBytes = "64MiB",
-                    readaheadSecs = "60", cacheSecs = "120", lowSpec = false,
+                    readaheadSecs = "300", cacheSecs = "360", lowSpec = false,
                 )
             }
         }

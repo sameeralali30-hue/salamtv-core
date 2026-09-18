@@ -552,6 +552,8 @@ class ExoSubtitleEngine(
             parameters = buildUponParameters()
                 .setPreferredAudioLanguage(prefAudioLang.takeIf { it.isNotBlank() })
                 .setPreferredTextLanguage(prefSubLang.takeIf { it.isNotBlank() })
+                // Opt-in subtitles: without a preferred language ignore "default"-flagged text tracks.
+                .setIgnoredTextSelectionFlags(if (prefSubLang.isBlank()) C.SELECTION_FLAG_DEFAULT else 0)
                 .build()
         }
         // Software decoding is a rescue, not the default. A catch-up archive starts mid-GOP and SOME
@@ -702,6 +704,8 @@ class ExoSubtitleEngine(
             p.trackSelectionParameters = p.trackSelectionParameters.buildUpon()
                 .setPreferredAudioLanguage(prefAudioLang.takeIf { it.isNotBlank() })
                 .setPreferredTextLanguage(prefSubLang.takeIf { it.isNotBlank() })
+                // Opt-in subtitles: without a preferred language ignore "default"-flagged text tracks.
+                .setIgnoredTextSelectionFlags(if (prefSubLang.isBlank()) C.SELECTION_FLAG_DEFAULT else 0)
                 .build()
         }
     }

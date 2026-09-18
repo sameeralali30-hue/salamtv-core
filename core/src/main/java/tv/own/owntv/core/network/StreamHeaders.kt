@@ -38,6 +38,24 @@ object StreamHeaders {
         return CANONICAL[lower] ?: name
     }
 
+    /** Panel device token — the `/d/<token>/` segment the panel puts in every stream URL after login. */
+    private val DEVICE_PATH = Regex("/d/([a-f0-9]{32})/")
+
+    /** Header the panel's key server checks before handing out an HLS decryption key. */
+    const val DEVICE_HEADER = "X-Device"
+
+    /**
+     * Headers for one stream: the stored per-item headers plus, for a panel URL, the device token as
+     * [DEVICE_HEADER]. Encrypted HLS (AES-128) puts the key URL in the playlist as an absolute link to
+     * the panel, outside the `/d/<token>/` base, so the token cannot ride in the path there — the panel
+     * reads it from this header instead and refuses the key to anything that lacks it. Sent on every
+     * request of the stream (playlist, segments, key): the data source carries one header set.
+     */
+    fun forStream(serialized: String?, url: String?): Map<String, String> {
+        val token = url?.let { DEVICE_PATH.find(it)?.groupValues?.get(1) } ?: return decode(serialized)
+        return LinkedHashMap(decode(serialized)).apply { put(DEVICE_HEADER, token) }
+    }
+
     /** `Key: Value` per line → map. Blank/malformed lines are skipped. */
     fun decode(serialized: String?): Map<String, String> {
         val text = serialized?.takeIf { it.isNotBlank() } ?: return emptyMap()

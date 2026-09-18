@@ -133,7 +133,7 @@ class HeroPreviewEngine(
             stop()
             return
         }
-        val headers = tv.own.owntv.core.network.StreamHeaders.decode(httpHeaders)
+        val headers = tv.own.owntv.core.network.StreamHeaders.forStream(httpHeaders, url)
         // An item's own User-Agent is more specific than the source-wide one, so it wins — same rule as
         // the live and VOD engines.
         val effectiveUa = tv.own.owntv.core.network.StreamHeaders.userAgentOf(headers)

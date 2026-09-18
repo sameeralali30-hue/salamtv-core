@@ -362,9 +362,18 @@
 1	core/src/main/java/tv/own/owntv/core/settings/SubtitleStyle.kt	top_center
 1	core/src/main/java/tv/own/owntv/core/settings/SubtitleStyle.kt	top_left
 1	core/src/main/java/tv/own/owntv/core/settings/SubtitleStyle.kt	top_right
+1	core/src/main/java/tv/own/owntv/core/setup/LicenseTicket.kt	\0
+1	core/src/main/java/tv/own/owntv/core/setup/LicenseTicket.kt	-----
+1	core/src/main/java/tv/own/owntv/core/setup/LicenseTicket.kt	-----BEGIN PUBLIC KEY----- MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsHQKzomlEmjW6O8AQZVo AF2G3LhUU1qpmb90C/Mf3HkXk1PiMbt/FsQQsIhDvWBDcHM4FbFSBYKYSIiHLD9D /gBOn3xT4wfcZVDSPzBISqaZMxrSwTlvbuwKhzJSQ3hZOQI7El+JGNSY4ZxEmu3L J85f6FZQWrWcgNclZzs17kGPiiIeYVAvLYtdLjAfiJLjThqv+wzjgKlq5JZdaoCs 9CT8/f7XZ6Kzqg5MZMKhkZ3azUWK55YJ/9eRo3foOdnjXQ35ZicOcsS1HtZeBHh8 2k0NpgrANFac2PW8vU+Lz7jeJIFE45lbO0+Z+lFmnfaBXMY5Aw8sT1pyfzrWSnLR +QIDAQAB -----END PUBLIC KEY-----
+1	core/src/main/java/tv/own/owntv/core/setup/LicenseTicket.kt	.$it
+1	core/src/main/java/tv/own/owntv/core/setup/LicenseTicket.kt	exp
+1	core/src/main/java/tv/own/owntv/core/setup/LicenseTicket.kt	hosts
+1	core/src/main/java/tv/own/owntv/core/setup/LicenseTicket.kt	iat
+1	core/src/main/java/tv/own/owntv/core/setup/LicenseTicket.kt	v
 1	core/src/main/java/tv/own/owntv/core/subtitles/OpenSubtitlesClient.kt	$method ${pathAndQuery.substringBefore('?')} via $base -> ${e.javaClass.simpleName}: ${e.message}
 1	core/src/main/java/tv/own/owntv/core/subtitles/OpenSubtitlesClient.kt	$method ${pathAndQuery.substringBefore('?')} via $base -> HTTP ${resp.code}
 1	core/src/main/java/tv/own/owntv/core/sync/work/TrendingRefreshWorker.kt	Playlist
+1	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	-$form-
 1	core/src/main/java/tv/own/owntv/core/util/CrashRecorder.kt	${Build.MANUFACTURER} ${Build.MODEL} · Android ${Build.VERSION.RELEASE} (API ${Build.VERSION.SDK_INT})
 1	core/src/main/java/tv/own/owntv/core/util/CrashRecorder.kt	--- live diagnostics leading up to the crash ---
 3	player-core/src/main/java/tv/own/owntv/player/LivePreviewEngine.kt	\0

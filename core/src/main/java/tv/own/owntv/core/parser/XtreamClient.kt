@@ -68,7 +68,7 @@ data class XtEpgEntry(val title: String, val description: String?, val startMs: 
  * stream lists are streamed object-by-object with [android.util.JsonReader] and pushed to a callback,
  * so a 340k-channel response never sits fully in memory.
  */
-class XtreamClient(private val http: HttpClient) {
+class XtreamClient(private val http: HttpClient, private val localeStore: tv.own.owntv.core.i18n.LocaleStore? = null) {
 
     // --- Categories ---
     suspend fun liveCategories(s: SourceEntity, onProgress: ((Long, Long?) -> Unit)? = null) = categories(s, "get_live_categories", onProgress)
@@ -654,7 +654,9 @@ class XtreamClient(private val http: HttpClient) {
     private fun api(s: SourceEntity, action: String, extra: String = ""): String {
         val u = URLEncoder.encode(s.username.orEmpty(), "UTF-8")
         val p = URLEncoder.encode(s.password.orEmpty(), "UTF-8")
-        return "${base(s)}/player_api.php?username=$u&password=$p&action=$action$extra"
+        // [SALAMTV] لغة الواجهة مع كلّ نداء: اللوحة تعيد أسماء الأقسام بها (لوحات Xtream الأخرى تتجاهلها)
+        val lang = localeStore?.let { tv.own.owntv.core.i18n.AppLang.code(it) }?.let { "&lang=$it" }.orEmpty()
+        return "${base(s)}/player_api.php?username=$u&password=$p&action=$action$extra$lang"
     }
 
     /** `&category_id=X` query suffix (server-side filter), or "" when fetching everything. */

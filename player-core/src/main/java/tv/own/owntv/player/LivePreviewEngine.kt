@@ -280,6 +280,8 @@ class LivePreviewEngine(
             p.trackSelectionParameters = p.trackSelectionParameters.buildUpon()
                 .setPreferredAudioLanguage(prefAudioLang.takeIf { it.isNotBlank() })
                 .setPreferredTextLanguage(prefSubLang.takeIf { it.isNotBlank() })
+                // Opt-in subtitles: without a preferred language ignore "default"-flagged text tracks.
+                .setIgnoredTextSelectionFlags(if (prefSubLang.isBlank()) C.SELECTION_FLAG_DEFAULT else 0)
                 .build()
         }
     }
@@ -1202,7 +1204,7 @@ class LivePreviewEngine(
         tunedLiveBufferOverride = liveBufferOverride
         tunedDrmConfig = drmConfig
         currentDrm = tv.own.owntv.core.drm.DrmConfig.decode(drmConfig)
-        currentHeaders = StreamHeaders.decode(httpHeaders)
+        currentHeaders = StreamHeaders.forStream(httpHeaders, url)   // + X-Device for panel streams (encrypted HLS keys)
         // A channel's own User-Agent is more specific than the playlist-wide one, so it wins (F16).
         val configuredUa = StreamHeaders.userAgentOf(currentHeaders) ?: userAgent?.takeIf { it.isNotBlank() }
         uaIsCustom = configuredUa != null

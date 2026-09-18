@@ -1584,6 +1584,7 @@
 1	technical	core/src/main/java/tv/own/owntv/core/home/HomeFeed.kt	episode:${episode.id}
 1	technical	core/src/main/java/tv/own/owntv/core/home/HomeFeed.kt	live:${channel.id}
 1	technical	core/src/main/java/tv/own/owntv/core/home/HomeFeed.kt	movie:${movie.id}
+1	locale	core/src/main/java/tv/own/owntv/core/i18n/AppLang.kt	en
 1	empty	core/src/main/java/tv/own/owntv/core/i18n/AppLocale.kt	\0
 1	empty	core/src/main/java/tv/own/owntv/core/i18n/LocaleStore.kt	\0
 1	technical	core/src/main/java/tv/own/owntv/core/i18n/LocaleStore.kt	Failed to persist application locale
@@ -1838,11 +1839,13 @@
 1	protocol	core/src/main/java/tv/own/owntv/core/network/StreamHeaders.kt	$name: $value
 1	protocol	core/src/main/java/tv/own/owntv/core/network/StreamHeaders.kt	${it.key}: ${it.value}
 1	protocol	core/src/main/java/tv/own/owntv/core/network/StreamHeaders.kt	,
+1	regex	core/src/main/java/tv/own/owntv/core/network/StreamHeaders.kt	/d/([a-f0-9]{32})/
 1	protocol	core/src/main/java/tv/own/owntv/core/network/StreamHeaders.kt	Authorization
 1	protocol	core/src/main/java/tv/own/owntv/core/network/StreamHeaders.kt	Cookie
 1	protocol	core/src/main/java/tv/own/owntv/core/network/StreamHeaders.kt	Origin
 2	protocol	core/src/main/java/tv/own/owntv/core/network/StreamHeaders.kt	Referer
 3	protocol	core/src/main/java/tv/own/owntv/core/network/StreamHeaders.kt	User-Agent
+1	protocol	core/src/main/java/tv/own/owntv/core/network/StreamHeaders.kt	X-Device
 1	protocol	core/src/main/java/tv/own/owntv/core/network/StreamHeaders.kt	X-Forwarded-For
 1	protocol	core/src/main/java/tv/own/owntv/core/network/StreamHeaders.kt	authorization
 1	protocol	core/src/main/java/tv/own/owntv/core/network/StreamHeaders.kt	connection
@@ -1929,10 +1932,11 @@
 1	protocol	core/src/main/java/tv/own/owntv/core/parser/XtreamClient.kt	${base(s)}/live/${s.username}/${s.password}/$streamId.ts
 1	protocol	core/src/main/java/tv/own/owntv/core/parser/XtreamClient.kt	${base(s)}/movie/${s.username}/${s.password}/$streamId.${ext ?: "mp4"}
 1	protocol	core/src/main/java/tv/own/owntv/core/parser/XtreamClient.kt	${base(s)}/player_api.php?username=$u&password=$p
-1	protocol	core/src/main/java/tv/own/owntv/core/parser/XtreamClient.kt	${base(s)}/player_api.php?username=$u&password=$p&action=$action$extra
+1	url	core/src/main/java/tv/own/owntv/core/parser/XtreamClient.kt	${base(s)}/player_api.php?username=$u&password=$p&action=$action$extra$lang
 1	protocol	core/src/main/java/tv/own/owntv/core/parser/XtreamClient.kt	${base(s)}/series/${s.username}/${s.password}/$episodeId.${ext ?: "mp4"}
 1	protocol	core/src/main/java/tv/own/owntv/core/parser/XtreamClient.kt	${base(s)}/xmltv.php?username=$u&password=$p
 1	protocol	core/src/main/java/tv/own/owntv/core/parser/XtreamClient.kt	&category_id=$it
+1	uri	core/src/main/java/tv/own/owntv/core/parser/XtreamClient.kt	&lang=$it
 1	protocol	core/src/main/java/tv/own/owntv/core/parser/XtreamClient.kt	&series_id=$seriesId
 1	protocol	core/src/main/java/tv/own/owntv/core/parser/XtreamClient.kt	&stream_id=$streamId&limit=$limit
 1	protocol	core/src/main/java/tv/own/owntv/core/parser/XtreamClient.kt	0
@@ -2033,12 +2037,14 @@
 1	technical	core/src/main/java/tv/own/owntv/core/player/PlayerBudget.kt	120
 1	technical	core/src/main/java/tv/own/owntv/core/player/PlayerBudget.kt	128MiB
 1	technical	core/src/main/java/tv/own/owntv/core/player/PlayerBudget.kt	16MiB
+1	technical	core/src/main/java/tv/own/owntv/core/player/PlayerBudget.kt	180
 1	technical	core/src/main/java/tv/own/owntv/core/player/PlayerBudget.kt	24MiB
 1	technical	core/src/main/java/tv/own/owntv/core/player/PlayerBudget.kt	256MiB
-2	technical	core/src/main/java/tv/own/owntv/core/player/PlayerBudget.kt	30
+1	technical	core/src/main/java/tv/own/owntv/core/player/PlayerBudget.kt	30
+1	technical	core/src/main/java/tv/own/owntv/core/player/PlayerBudget.kt	300
 1	technical	core/src/main/java/tv/own/owntv/core/player/PlayerBudget.kt	32MiB
+1	technical	core/src/main/java/tv/own/owntv/core/player/PlayerBudget.kt	360
 1	technical	core/src/main/java/tv/own/owntv/core/player/PlayerBudget.kt	48MiB
-2	technical	core/src/main/java/tv/own/owntv/core/player/PlayerBudget.kt	60
 1	technical	core/src/main/java/tv/own/owntv/core/player/PlayerBudget.kt	64MiB
 1	preference-key	core/src/main/java/tv/own/owntv/core/player/VodEngineStore.kt	exo_urls
 1	preference-key	core/src/main/java/tv/own/owntv/core/player/VodEngineStore.kt	mpv_urls
@@ -2290,6 +2296,8 @@
 1	preference-key	core/src/main/java/tv/own/owntv/core/settings/SettingsRepository.kt	weather_enabled
 1	preference-key	core/src/main/java/tv/own/owntv/core/settings/SettingsRepository.kt	weather_fahrenheit
 1	preference-key	core/src/main/java/tv/own/owntv/core/settings/SettingsRepository.kt	weather_location
+1	protocol	core/src/main/java/tv/own/owntv/core/setup/LicenseTicket.kt	RSA
+1	protocol	core/src/main/java/tv/own/owntv/core/setup/LicenseTicket.kt	SHA256withRSA
 1	empty	core/src/main/java/tv/own/owntv/core/setup/SetupText.kt	\0
 1	protocol	core/src/main/java/tv/own/owntv/core/setup/SetupText.kt	Mozilla/5.0 (QtEmbedded; U; Linux; C) AppleWebKit/533.3 (KHTML, like Gecko) MAG250 stbapp ver: 2 rev: 250 Safari/533.3
 1	protocol	core/src/main/java/tv/own/owntv/core/setup/SetupText.kt	Mozilla/5.0 (QtEmbedded; U; Linux; C) AppleWebKit/533.3 (KHTML, like Gecko) MAG254 stbapp ver: 2 rev: 250 Safari/533.3
@@ -2925,9 +2933,12 @@
 1	log	core/src/main/java/tv/own/owntv/core/tv/TvHomeRepository.kt	syncMovie profile=$profileId movieId=$movieId groupId=$groupId existing=${existing?.providerProgramId ?: -1}
 1	log	core/src/main/java/tv/own/owntv/core/tv/TvHomeRepository.kt	syncMovie skip hidden profile=$profileId movieId=$movieId sourceId=${movie.sourceId}
 1	log	core/src/main/java/tv/own/owntv/core/tv/TvHomeRepository.kt	syncMovie skip user-hidden profile=$profileId movieId=$movieId groupId=$groupId
+1	protocol	core/src/main/java/tv/own/owntv/core/update/DeviceForm.kt	phone
+1	protocol	core/src/main/java/tv/own/owntv/core/update/DeviceForm.kt	tv
 1	protocol	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	.apk
 1	technical	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	Accept
 1	technical	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	OwnTV
+1	protocol	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	Range
 1	protocol	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	SalamTV
 1	log	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	UpdateManager
 2	technical	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	User-Agent
@@ -2935,11 +2946,18 @@
 1	json	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	assets
 1	json	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	body
 1	json	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	browser_download_url
+1	protocol	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	bytes=$have-
+1	log	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	download attempt $attempt failed, ${partial.length()} bytes kept: ${e.message}
+1	log	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	file changed on server
+1	uri	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	form
+1	log	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	gave up after $MAX_ATTEMPTS attempts: ${lastError?.message}
 1	log	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	install cancelled by user
 1	log	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	install refused status=$status message=$message
 1	json	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	name
 1	file-path	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	owntv-update
 1	file-path	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	owntv-update.apk
+1	file-path	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	owntv-update.part
+1	log	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	rename failed
 1	url	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	sameeralali30-hue/salamtv
 1	json	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	tag_name
 1	log	core/src/main/java/tv/own/owntv/core/update/UpdateManager.kt	truncated: got $copied of $total bytes
@@ -3558,7 +3576,7 @@
 2	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	decoder+vo
 1	log	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	decoder-drops=${getPropertyString("decoder-frame-drop-count")}
 1	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	decoder-frame-drop-count
-1	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	default
+2	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	default
 1	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	deinterlace
 4	protocol	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	demuxer-cache-duration
 2	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	demuxer-lavf-analyzeduration
@@ -3681,7 +3699,7 @@
 1	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	msg-level
 2	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	mute
 1	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	network-timeout
-25	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	no
+26	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	no
 1	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	no-video (mpv, Live) — audio progressing but no video frame after ~${elapsedMs}ms
 1	log	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	no-video (mpv, Live) — reconnect attempt ${item.liveStallReconnects}/$MAX_LIVE_RECONNECTS
 1	log	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	no-video (mpv, Live) — reconnect budget exhausted, surfacing error
@@ -3743,6 +3761,7 @@
 3	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	sub-text
 1	log	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	sub-text (direct=${_directRender.value}): $line
 5	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	sub-visibility
+2	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	subs-fallback
 2	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	subs-with-matching-audio
 1	file-path	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	subtitle-fonts
 1	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	surround failsafe: $reason (est-vf-fps=$vfps container-fps=$cfps) — falling back to stereo

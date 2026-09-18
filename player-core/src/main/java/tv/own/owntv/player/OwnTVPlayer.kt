@@ -836,6 +836,9 @@ class OwnTVPlayer(
     var onSubtitleDelayUserChange: ((offsetMs: Int) -> Unit)? = null
     private var prefAudioLang = ""
     private var prefSubLang = ""
+
+    /** mpv `subs-fallback`: only a chosen language may auto-select a subtitle track. */
+    private fun subsFallback(lang: String) = if (lang.isBlank()) "no" else "default"
     private var defaultZoom = ZoomMode.FIT
 
     /** Settings → the volume a newly picked item starts at, before any per-item override. */
@@ -1017,6 +1020,7 @@ class OwnTVPlayer(
             if (initialized) mpvAsync {
                 setPropertyString("slang", lang)
                 setPropertyString("subs-with-matching-audio", if (lang.isBlank()) "no" else "yes")
+                setPropertyString("subs-fallback", subsFallback(lang))
             }
         }.launchIn(scope)
         settings.defaultZoom.onEach { name ->
@@ -2309,6 +2313,9 @@ class OwnTVPlayer(
             if (prefAudioLang.isNotBlank()) setOptionString("alang", prefAudioLang)
             if (prefSubLang.isNotBlank()) setOptionString("slang", prefSubLang)
             setOptionString("subs-with-matching-audio", if (prefSubLang.isBlank()) "no" else "yes")
+            // Subtitles are opt-in (owner decision): with no preferred language mpv must not auto-pick a
+            // "default"-flagged track. Forced subs (foreign dialogue) still come via subs-fallback-forced.
+            setOptionString("subs-fallback", subsFallback(prefSubLang))
             // HDR passthrough: signal the source colorspace (incl. HDR10/HLG) to the display surface.
             setOptionString("target-colorspace-hint", if (hdrHint) "yes" else "no")
             init()
@@ -2394,7 +2401,7 @@ class OwnTVPlayer(
         // item left behind; live keeps the field as-is when none is passed, because LiveViewModel
         // installs the live provider on BOTH engines just before calling this.
         if (reconnectProvider != null || !isLive) reconnectUrlProvider = reconnectProvider
-        currentHeaders = StreamHeaders.decode(httpHeaders)
+        currentHeaders = StreamHeaders.forStream(httpHeaders, url)   // + X-Device for panel streams (encrypted HLS keys)
         currentDrm = tv.own.owntv.core.drm.DrmConfig.decode(drmConfig)
         // The channel's own UA wins over the playlist-wide one (F16): a playlist sets one UA for the
         // whole provider, an EXTVLCOPT line sets it for the one restream that needs it.
@@ -2462,7 +2469,7 @@ class OwnTVPlayer(
         val resolve = item.resolveUrl
         // Per-item headers replace (never merge with) the previous item's, so a queue that mixes
         // header-carrying and plain episodes can't leak one item's Referer onto the next.
-        currentHeaders = StreamHeaders.decode(item.httpHeaders)
+        currentHeaders = StreamHeaders.forStream(item.httpHeaders, item.url)
         currentDrm = tv.own.owntv.core.drm.DrmConfig.decode(item.drmConfig)
         currentUserAgent = StreamHeaders.userAgentOf(currentHeaders) ?: queueUserAgent
         tunedUserAgent = queueUserAgent

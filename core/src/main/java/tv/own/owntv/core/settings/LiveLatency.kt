@@ -24,7 +24,10 @@ enum class LiveLatency {
 /** Maps a [LiveLatency] choice to an effective buffer size in seconds (null = keep engine defaults). */
 object LiveBuffer {
     const val LOW_SECS = 2
-    const val STABLE_SECS = 15
+    /* [SALAMTV] 25 لا 15: مشتركون على شبكات ضعيفة، والخادم يحتفظ بنافذة 48 ثانية (12 مقطعاً ×
+       4 ث) فيستطيع المشغّل أن يقف 25 ثانية خلف الحافّة ويمتصّ انقطاعاً بطول ذلك. من يريد
+       المباراة لحظتها يختار «كمون منخفض». */
+    const val STABLE_SECS = 25
     const val CUSTOM_MIN = 1
     const val CUSTOM_MAX = 60
     const val CUSTOM_DEFAULT = 8
