@@ -836,6 +836,11 @@ class OwnTVPlayer(
     var onSubtitleDelayUserChange: ((offsetMs: Int) -> Unit)? = null
     private var prefAudioLang = ""
     private var prefSubLang = ""
+    /** [SALAMTV] The subscriber's quality choice (see [StreamQuality]); applied at the URL on every load. */
+    private var prefStreamHeight = StreamQuality.AUTO
+    /** Rungs the panel allows for the current ladder item (from its master playlist), highest first. */
+    private var ladderHeights: List<Int> = emptyList()
+    private var ladderJob: kotlinx.coroutines.Job? = null
 
     /** mpv `subs-fallback`: only a chosen language may auto-select a subtitle track. */
     private fun subsFallback(lang: String) = if (lang.isBlank()) "no" else "default"
@@ -1015,6 +1020,7 @@ class OwnTVPlayer(
             prefAudioLang = lang
             if (initialized) mpvAsync { setPropertyString("alang", lang) }
         }.launchIn(scope)
+        settings.streamQuality.onEach { prefStreamHeight = it }.launchIn(scope)
         settings.preferredSubLang.onEach { lang ->
             prefSubLang = lang
             if (initialized) mpvAsync {
@@ -1440,7 +1446,8 @@ class OwnTVPlayer(
         }
         override fun onCues(cues: List<androidx.media3.common.text.Cue>) { _exoCues.value = cues }
         override fun onVideoTracks(tracks: List<TrackOption>) {
-            _videoTrackList.value = tracks
+            // [SALAMTV] A ladder item shows the panel's rungs, not the single rung Exo sees.
+            if (ladderHeights.isNotEmpty()) publishLadderTracks() else _videoTrackList.value = tracks
         }
 
         override fun onAudioTracks(tracks: List<TrackOption>) {
@@ -2553,7 +2560,7 @@ class OwnTVPlayer(
     }
 
     private fun loadUrl(
-        url: String,
+        rawUrl: String,
         meta: MediaMeta,
         isLive: Boolean,
         startPositionMs: Long,
@@ -2562,6 +2569,9 @@ class OwnTVPlayer(
         isArchive: Boolean = false,
         startPaused: Boolean = false,
     ) {
+        // [SALAMTV] A ladder URL always carries the rung the subscriber chose (or the slow-network
+        // default) — see StreamQuality for why the choice lives in the URL and not in the engine.
+        val url = StreamQuality.withHeight(rawUrl, prefStreamHeight)
         // Internal retries keep the current item's notice; a new item must never inherit it.
         if (resetRetries) clearToast()
         ensureInit()
@@ -2591,6 +2601,7 @@ class OwnTVPlayer(
                 "ua=${if (currentUserAgent.isNullOrBlank()) "default" else "custom"}",
         )
         loadGeneration++
+        refreshLadder(url)   // after the bump: the fetch belongs to this generation
         errorCheckJob?.cancel()
         videoCheckJob?.cancel()
         liveStallJob?.cancel()
@@ -3633,6 +3644,37 @@ class OwnTVPlayer(
     fun textTracks(): List<TrackOption> = _subTrackList.value
     fun videoTracks(): List<TrackOption> = _videoTrackList.value
 
+    /**
+     * [SALAMTV] Lists the panel's rungs for a ladder item as the quality menu — one HTTP GET of the
+     * master playlist, which the panel filters by the subscriber's plan cap. Non-ladder items keep
+     * whatever the engine reports. Superseded loads are ignored by generation.
+     */
+    private fun refreshLadder(url: String) {
+        ladderJob?.cancel()
+        ladderHeights = emptyList()
+        if (!StreamQuality.isLadderUrl(url)) return
+        val gen = loadGeneration
+        ladderJob = scope.launch {
+            val heights = try {
+                kotlinx.coroutines.withContext(Dispatchers.IO) {
+                    val req = okhttp3.Request.Builder().url(StreamQuality.masterUrl(url))
+                        .header("User-Agent", currentUserAgent ?: HttpClient.DEFAULT_USER_AGENT).build()
+                    streamingHttp.client.newCall(req).execute().use { r -> if (r.isSuccessful) StreamQuality.parseMasterHeights(r.body?.string().orEmpty()) else emptyList() }
+                }
+            } catch (e: Exception) { emptyList() }
+            if (gen != loadGeneration) return@launch
+            ladderHeights = heights
+            if (heights.isNotEmpty()) publishLadderTracks()
+        }
+    }
+
+    private fun publishLadderTracks() {
+        val chosen = if (prefStreamHeight > 0) prefStreamHeight else StreamQuality.AUTO_HEIGHT
+        // The rung actually served is the highest at or under the choice (rvPick on the panel).
+        val served = ladderHeights.firstOrNull { it <= chosen } ?: ladderHeights.last()
+        _videoTrackList.value = ladderHeights.map { h -> TrackOption(label = h.toString(), mpvId = h, selected = prefStreamHeight > 0 && h == served) }
+    }
+
     fun setBitrateTrackingEnabled(enabled: Boolean) {
         // Gated by the escape-hatch toggle: with it off, no throughput measuring ever starts.
         exoEngine?.setBitrateTrackingEnabled(enabled && measuredStreamStats)
@@ -3811,6 +3853,18 @@ class OwnTVPlayer(
      * the honest one: the alternative was a menu that silently did nothing on half the channels.
      */
     fun selectVideo(id: Int) {
+        if (ladderHeights.isNotEmpty()) {
+            // [SALAMTV] Ladder item: the choice is persisted and the item reloads on its rung URL at the
+            // same position. Both engines then play exactly that rendition — no bitrate guessing.
+            val h = if (id == StreamQuality.MENU_AUTO_ID) StreamQuality.AUTO else id
+            if (h == prefStreamHeight) return
+            prefStreamHeight = h
+            scope.launch { settings.setStreamQuality(h) }
+            val resume = if (isLiveContent) 0L else _position.value
+            val url = currentUrl ?: return
+            loadUrl(url, currentMetaSnapshot(), isLiveContent, resume)
+            return
+        }
         if (exoActive) {
             exoEngine?.selectVideo(id)
         } else if (initialized) {

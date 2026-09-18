@@ -2276,6 +2276,7 @@
 1	technical	core/src/main/java/tv/own/owntv/core/settings/SettingsRepository.kt	startup_mode_
 1	preference-key	core/src/main/java/tv/own/owntv/core/settings/SettingsRepository.kt	startup_mode_$pid
 4	preference-key	core/src/main/java/tv/own/owntv/core/settings/SettingsRepository.kt	startup_mode_$profileId
+1	preference-key	core/src/main/java/tv/own/owntv/core/settings/SettingsRepository.kt	stream_quality
 1	preference-key	core/src/main/java/tv/own/owntv/core/settings/SettingsRepository.kt	sub_font
 1	preference-key	core/src/main/java/tv/own/owntv/core/settings/SettingsRepository.kt	sub_scale
 1	preference-key	core/src/main/java/tv/own/owntv/core/settings/SettingsRepository.kt	sub_scale_exo
@@ -3510,6 +3511,7 @@
 1	log	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	OwnTVPlayer
 1	log	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	PlayerBudget: $budget
 1	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	STEREO
+1	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	User-Agent
 1	log	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	VOD ended mid-stream again at ${pos}ms of ${dur}ms — surfacing error
 1	log	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	VOD ended mid-stream at ${pos}ms of ${dur}ms — reloading once from position
 1	log	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	VOD failed on BOTH engines — exo first: '$exoErr' / mpv: '$mpvMsg'
@@ -3965,6 +3967,12 @@
 1	technical	player-core/src/main/java/tv/own/owntv/player/StreamInfo.kt	$width×$height
 1	technical	player-core/src/main/java/tv/own/owntv/player/StreamInfo.kt	5.1
 1	technical	player-core/src/main/java/tv/own/owntv/player/StreamInfo.kt	7.1
+1	uri	player-core/src/main/java/tv/own/owntv/player/StreamQuality.kt	&
+1	uri	player-core/src/main/java/tv/own/owntv/player/StreamQuality.kt	?
+1	regex	player-core/src/main/java/tv/own/owntv/player/StreamQuality.kt	RESOLUTION=\\d+x(\\d+)
+1	regex	player-core/src/main/java/tv/own/owntv/player/StreamQuality.kt	^(https?://[^?#]+/(?:live|movie|series)/[^/?#]+/[^/?#]+/\\d+\\.m3u8)(?:\\?([^#]*))?$
+1	uri	player-core/src/main/java/tv/own/owntv/player/StreamQuality.kt	q=
+1	uri	player-core/src/main/java/tv/own/owntv/player/StreamQuality.kt	q=$q
 1	technical	player-core/src/main/java/tv/own/owntv/player/SubtitleFonts.kt	Dancing Script
 1	technical	player-core/src/main/java/tv/own/owntv/player/SubtitleFonts.kt	Lora
 1	technical	player-core/src/main/java/tv/own/owntv/player/SubtitleFonts.kt	Playfair Display

@@ -314,6 +314,8 @@ class SettingsRepository(private val context: Context, private val localeStore: 
         val AUDIO_DELAY_MS = intPreferencesKey("audio_delay_ms")
         val PREF_AUDIO_LANG = stringPreferencesKey("pref_audio_lang")
         val PREF_SUB_LANG = stringPreferencesKey("pref_sub_lang")
+        // [SALAMTV] Stream quality the subscriber picked: 0 = auto, else a rung height (360/480/720/1080).
+        val STREAM_QUALITY = intPreferencesKey("stream_quality")
         // OpenSubtitles online-search language filter. Separate from PREF_SUB_LANG (embedded tracks) —
         // off by default, so a search returns every language OpenSubtitles has for the title.
         val SUB_SEARCH_FILTER = booleanPreferencesKey("sub_search_filter")
@@ -1397,6 +1399,13 @@ class SettingsRepository(private val context: Context, private val localeStore: 
 
     suspend fun setPreferredAudioLang(lang: String) {
         context.dataStore.edit { it[Keys.PREF_AUDIO_LANG] = lang }
+    }
+
+    /** [SALAMTV] Stream quality for the panel's ladder: 0 = auto, else the rung height. */
+    val streamQuality: Flow<Int> = prefsFlow { it[Keys.STREAM_QUALITY] ?: 0 }
+
+    suspend fun setStreamQuality(height: Int) {
+        context.dataStore.edit { it[Keys.STREAM_QUALITY] = height.coerceAtLeast(0) }
     }
 
     /** Preferred subtitle language (ISO code, mpv slang); blank = no preference. */
