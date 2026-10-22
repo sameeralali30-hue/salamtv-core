@@ -10,10 +10,18 @@ package tv.own.owntv.core.settings
  *
  * ═══ Two decisions ═══
  *
- * ① Three seconds of pre-buffer, not five.
- *    The cost of a head start is paid on every channel change, and channel changing is the thing
- *    subscribers do most. Three seconds absorbs the ordinary jitter of a mobile connection while
- *    still letting a channel appear promptly; five was noticeably sluggish to zap through.
+ * ① No pre-buffer at all.
+ *    This started at three seconds, on the reasoning that a head start absorbs the ordinary jitter
+ *    of a mobile connection. What it absorbed instead was the owner's patience: the gate holds the
+ *    picture on every channel change AND after every underrun, so a channel on a shaky line spends
+ *    its time dark, fills three seconds, plays three seconds, and goes dark again — which reads as
+ *    "it records a clip and replays it", not as smoothing.
+ *
+ *    Zero hands that judgement to the engine, which starts as soon as it can decode and keeps
+ *    buffering while it plays. The protection lost is real — a line that cannot hold the bitrate
+ *    now stutters instead of waiting — and that is what the quality ladder is for: dropping a rung
+ *    keeps playback running, where a head start only delayed the same stall. A subscriber who
+ *    prefers the old behaviour still has Settings → Player → Pre-buffer.
  *
  * ② Stable rather than Balanced.
  *    This raises the buffer the player tries to hold, not the delay before playback starts, so it
@@ -25,8 +33,8 @@ package tv.own.owntv.core.settings
  */
 object SalamTvDefaults {
 
-    /** Seconds filled before a live channel starts, and refilled after a rebuffer. */
-    const val PREROLL_SECS: Int = 3
+    /** Seconds filled before a live channel starts, and refilled after a rebuffer. 0 = no gate. */
+    const val PREROLL_SECS: Int = 0
 
     /** Live buffer depth the engine aims to hold. */
     val LATENCY: LiveLatency = LiveLatency.STABLE
