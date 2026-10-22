@@ -3556,6 +3556,7 @@
 1	mime	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	audio/vnd.dts
 1	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	audiotrack
 2	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	auto
+1	log	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	auto quality rung=$next cache=$cacheS stalled=${sample.stalled}
 1	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	auto-safe
 1	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	av1
 1	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	avc
@@ -3579,7 +3580,7 @@
 1	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	decoder-frame-drop-count
 2	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	default
 1	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	deinterlace
-4	protocol	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	demuxer-cache-duration
+5	protocol	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	demuxer-cache-duration
 2	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	demuxer-lavf-analyzeduration
 2	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	demuxer-lavf-o
 2	technical	player-core/src/main/java/tv/own/owntv/player/OwnTVPlayer.kt	demuxer-lavf-probesize

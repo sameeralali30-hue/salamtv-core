@@ -842,6 +842,19 @@ class OwnTVPlayer(
     private var ladderHeights: List<Int> = emptyList()
     private var ladderJob: kotlinx.coroutines.Job? = null
 
+    /* [SALAMTV] Auto quality. [prefStreamHeight] == AUTO no longer means a fixed rung: [autoState]
+       follows how playback is actually going and [autoHeight] is where it settled. Kept apart from
+       prefStreamHeight on purpose — an automatic move must never be written to the subscriber's
+       saved choice, or one bad minute on a train would pin them to 240p for good. */
+    private val autoState = AdaptiveQuality.State()
+    private var autoHeight = 0
+    private var autoJob: kotlinx.coroutines.Job? = null
+
+    /** The rung this load should use: the subscriber's choice if they made one, else Auto's. */
+    private fun effectiveStreamHeight(): Int =
+        if (prefStreamHeight > 0) prefStreamHeight
+        else autoHeight.takeIf { it > 0 } ?: StreamQuality.AUTO_HEIGHT
+
     /** mpv `subs-fallback`: only a chosen language may auto-select a subtitle track. */
     private fun subsFallback(lang: String) = if (lang.isBlank()) "no" else "default"
     private var defaultZoom = ZoomMode.FIT
@@ -2569,9 +2582,9 @@ class OwnTVPlayer(
         isArchive: Boolean = false,
         startPaused: Boolean = false,
     ) {
-        // [SALAMTV] A ladder URL always carries the rung the subscriber chose (or the slow-network
-        // default) — see StreamQuality for why the choice lives in the URL and not in the engine.
-        val url = StreamQuality.withHeight(rawUrl, prefStreamHeight)
+        // [SALAMTV] A ladder URL always carries the rung the subscriber chose, or the one Auto has
+        // settled on — see StreamQuality for why the choice lives in the URL and not in the engine.
+        val url = StreamQuality.withHeight(rawUrl, effectiveStreamHeight())
         // Internal retries keep the current item's notice; a new item must never inherit it.
         if (resetRetries) clearToast()
         ensureInit()
@@ -3664,14 +3677,67 @@ class OwnTVPlayer(
             } catch (e: Exception) { emptyList() }
             if (gen != loadGeneration) return@launch
             ladderHeights = heights
-            if (heights.isNotEmpty()) publishLadderTracks()
+            if (heights.isNotEmpty()) {
+                publishLadderTracks()
+                startAutoQuality(gen)
+            }
+        }
+    }
+
+    /**
+     * [SALAMTV] The Auto loop — one sample a second, the policy in [AdaptiveQuality] decides.
+     *
+     * It runs only while the subscriber has made no manual choice: a chosen rung is a decision, and
+     * software that quietly overrules it is worse than software that never adapted. A switch reloads
+     * the item on the new rung URL exactly as the quality menu does, but without persisting, so Auto
+     * stays Auto.
+     */
+    private fun startAutoQuality(gen: Int) {
+        autoJob?.cancel()
+        autoState.reset()
+        autoHeight = 0
+        if (prefStreamHeight > 0) return
+        autoJob = scope.launch {
+            while (gen == loadGeneration) {
+                kotlinx.coroutines.delay(1_000)
+                if (gen != loadGeneration || prefStreamHeight > 0) return@launch
+                if (ladderHeights.isEmpty()) continue
+
+                // Seconds already downloaded and waiting. mpv knows it directly; for ExoPlayer it is
+                // how far the buffer runs past the playhead. A negative value means "cannot say",
+                // which the policy treats as neither healthy nor struggling.
+                val cacheS = if (exoActive) {
+                    val ahead = _bufferedMs.value - _position.value
+                    if (_bufferedMs.value > 0) ahead / 1000.0 else -1.0
+                } else {
+                    mpv?.getPropertyDouble("demuxer-cache-duration") ?: -1.0
+                }
+                val sample = AdaptiveQuality.Sample(cacheS, _buffering.value)
+                val next = AdaptiveQuality.decide(
+                    autoState, sample, ladderHeights, android.os.SystemClock.elapsedRealtime()
+                ) ?: continue
+
+                if (next == autoHeight) continue
+                val first = autoHeight == 0
+                autoHeight = next
+                publishLadderTracks()
+                // The first decision is the rung this load already carries — nothing to reload.
+                if (first) continue
+                android.util.Log.d(TAG, "auto quality rung=$next cache=$cacheS stalled=${sample.stalled}")
+                val resume = if (isLiveContent) 0L else _position.value
+                val url = currentUrl ?: continue
+                loadUrl(url, currentMetaSnapshot(), isLiveContent, resume)
+                return@launch   // the reload starts a new generation, which starts a new loop
+            }
         }
     }
 
     private fun publishLadderTracks() {
-        val chosen = if (prefStreamHeight > 0) prefStreamHeight else StreamQuality.AUTO_HEIGHT
+        val chosen = effectiveStreamHeight()
         // The rung actually served is the highest at or under the choice (rvPick on the panel).
         val served = ladderHeights.firstOrNull { it <= chosen } ?: ladderHeights.last()
+        // Only a manual choice ticks a row: in Auto the menu must read "Auto", not look as though
+        // the subscriber had pinned whatever rung the policy happens to be on this second.
         _videoTrackList.value = ladderHeights.map { h -> TrackOption(label = h.toString(), mpvId = h, selected = prefStreamHeight > 0 && h == served) }
     }
 
