@@ -26,21 +26,39 @@ class AdaptiveQualityTest {
         assertEquals(StreamQuality.AUTO_HEIGHT, first)
     }
 
+    /** Just past the refill grace, still well inside the anti-oscillation cooldown. */
+    private val afterGrace = AdaptiveQuality.STARTUP_GRACE_MS + 1_000L
+
     @Test
     fun `a stall drops one rung immediately, ignoring cooldown`() {
         val s = AdaptiveQuality.State()
         AdaptiveQuality.decide(s, healthy(), ladder, 0L)       // settles on 360
         // Still inside COOLDOWN_MS: a stall must override it, or the viewer sits frozen.
-        val dropped = AdaptiveQuality.decide(s, stalling(), ladder, 1_000L)
+        val dropped = AdaptiveQuality.decide(s, stalling(), ladder, afterGrace)
         assertEquals(240, dropped)
+    }
+
+    @Test
+    fun `the first seconds of a channel are not read as a failing line`() {
+        val s = AdaptiveQuality.State()
+        AdaptiveQuality.decide(s, healthy(), ladder, 0L)        // settles on 360
+        // With no pre-buffer the picture starts on an empty cache, so these are the NORMAL signals
+        // of a channel opening - not a line that cannot cope. Dropping here would walk every
+        // subscriber to the floor on every channel change.
+        var t = 1_000L
+        while (t < AdaptiveQuality.STARTUP_GRACE_MS) {
+            assertNull(AdaptiveQuality.decide(s, stalling(), ladder, t)); t += 1_000L
+        }
+        assertEquals(StreamQuality.AUTO_HEIGHT, s.current)
     }
 
     @Test
     fun `at the lowest rung a stall changes nothing`() {
         val s = AdaptiveQuality.State()
         AdaptiveQuality.decide(s, healthy(), ladder, 0L)
-        AdaptiveQuality.decide(s, stalling(), ladder, 1_000L)   // → 240, the floor
-        assertNull(AdaptiveQuality.decide(s, stalling(), ladder, 2_000L))
+        AdaptiveQuality.decide(s, stalling(), ladder, afterGrace)   // → 240, the floor
+        // A second grace runs from that switch: the rung change reloaded the item.
+        assertNull(AdaptiveQuality.decide(s, stalling(), ladder, afterGrace * 2 + 1_000L))
         assertEquals(240, s.current)
     }
 
@@ -92,8 +110,9 @@ class AdaptiveQualityTest {
     fun `a weak line walks down to the floor and stays`() {
         val s = AdaptiveQuality.State()
         AdaptiveQuality.decide(s, healthy(), ladder, 0L)
+        // Each drop reloads the item, so each step waits out its own refill grace.
         var t = 1_000L
-        repeat(10) { AdaptiveQuality.decide(s, stalling(), ladder, t); t += 1_000L }
+        repeat(60) { AdaptiveQuality.decide(s, stalling(), ladder, t); t += 1_000L }
         assertEquals(240, s.current)
     }
 

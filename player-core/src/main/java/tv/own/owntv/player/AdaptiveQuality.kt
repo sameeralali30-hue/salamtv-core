@@ -48,6 +48,21 @@ object AdaptiveQuality {
     const val STALL_DROP = true
 
     /**
+     * How long after a switch a stall is read as "still filling" rather than "the line cannot cope".
+     *
+     * With the pre-buffer gate off (`SalamTvDefaults.PREROLL_SECS`) playback begins before the cache
+     * has anything in it, so the first seconds of every channel report `paused-for-cache` and a cache
+     * near zero — the same signals a genuinely failing line gives. Without this grace the policy would
+     * read the normal start of every channel as four failures in four seconds and walk the subscriber
+     * down to the bottom rung before the picture had settled, on a line that was never in trouble.
+     *
+     * It is deliberately shorter than [COOLDOWN_MS]: a line that is still stalling after it has had
+     * this long to fill really is struggling, and must be allowed to drop without waiting out the
+     * full cooldown.
+     */
+    const val STARTUP_GRACE_MS = 8_000L
+
+    /**
      * One observation of how playback is going.
      *
      * @param cacheSeconds video already downloaded and waiting (mpv `demuxer-cache-duration`,
@@ -96,7 +111,10 @@ object AdaptiveQuality {
         }
 
         val idx = rungs.indexOf(state.current).let { if (it < 0) nearestIndex(rungs, state.current) else it }
-        val cooling = nowMs - state.lastSwitchMs < COOLDOWN_MS
+        val sinceSwitch = nowMs - state.lastSwitchMs
+        val cooling = sinceSwitch < COOLDOWN_MS
+        // Still filling after a load or a rung change — see [STARTUP_GRACE_MS].
+        if (sinceSwitch < STARTUP_GRACE_MS) return null
 
         val struggling = (STALL_DROP && sample.stalled) ||
             (sample.cacheSeconds in 0.0..LOW_CACHE_S)
