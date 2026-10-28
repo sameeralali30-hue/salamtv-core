@@ -7,6 +7,10 @@ package tv.own.owntv.player
  * good one, and never reacting to a line that changes mid-match. This picks the rung from how
  * playback is actually going and moves with it, the way a viewer expects.
  *
+ * Since [StreamQuality.AUTO_HEIGHT] became `0`, Auto also *starts* at the provider's own rendition
+ * ([startRung]) instead of the bottom, so the common case — a line that can carry the channel — is
+ * no longer charged a re-encoded picture for the first minute and a half of every tune.
+ *
  * ═══ Why buffer health, not a bandwidth number ═══
  *
  * The obvious input is measured throughput, but on this player it is the wrong one. Throughput is
@@ -97,14 +101,27 @@ object AdaptiveQuality {
      * @param nowMs monotonic clock (`SystemClock.elapsedRealtime`), passed in so the policy stays
      *   testable without Android.
      */
+    /**
+     * Where Auto begins, from [rungs] sorted ascending.
+     *
+     * [StreamQuality.AUTO_HEIGHT] of `0` means the top rung — the provider's own rendition, which the
+     * panel copies rather than re-encodes. Starting there and falling on the first real sign of
+     * trouble costs a weak line a few seconds of stalling once; starting at the bottom cost every
+     * good line a re-encoded picture for the ~90 s [RISE_STREAK] needs to climb two rungs, on every
+     * single tune. A positive [StreamQuality.AUTO_HEIGHT] restores the old pick exactly.
+     */
+    fun startRung(rungs: List<Int>): Int =
+        if (StreamQuality.AUTO_HEIGHT <= 0) rungs.last()
+        else rungs.lastOrNull { it <= StreamQuality.AUTO_HEIGHT } ?: rungs.first()
+
     fun decide(state: State, sample: Sample, ladder: List<Int>, nowMs: Long): Int? {
         if (ladder.isEmpty()) return null
         val rungs = ladder.distinct().sorted()
 
-        // First decision: start at the safe default rather than guess. One second of real playback
-        // tells us more than any prior assumption about the line.
+        // First decision: start where [startRung] says, then let real playback correct it. One second
+        // of actual buffer tells us more than any prior assumption about the line.
         if (state.current == 0) {
-            val start = rungs.lastOrNull { it <= StreamQuality.AUTO_HEIGHT } ?: rungs.first()
+            val start = startRung(rungs)
             state.current = start
             state.lastSwitchMs = nowMs
             return start
